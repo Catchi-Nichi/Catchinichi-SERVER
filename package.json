@@ -1,0 +1,31 @@
+{
+	"name": "leadread",
+	"version": "1.0.0",
+	"description": "",
+	"main": "app.js",
+	"scripts": {
+		"start": "nodemon app"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/CAU-LeadRead/LeadRead-SERVER.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/CAU-LeadRead/LeadRead-SERVER/issues"
+	},
+	"homepage": "https://github.com/CAU-LeadRead/LeadRead-SERVER#readme",
+	"devDependencies": {
+		"nodemon": "^2.0.7"
+	},
+	"dependencies": {
+		"cookie-parser": "^1.4.5",
+		"express": "^4.17.1",
+		"http-errors": "^1.8.0",
+		"morgan": "^1.10.0",
+		"mysql2": "^2.2.5",
+		"sequelize": "^6.5.0",
+		"sequelize-cli": "^6.2.0"
+	}
+}
