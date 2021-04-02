@@ -8,24 +8,28 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/CAU-LeadRead/LeadRead-SERVER.git"
+		"url": "git+https://github.com/Catchi-Nichi/Catchinichi-SERVER.git"
 	},
 	"author": "",
 	"license": "ISC",
 	"bugs": {
-		"url": "https://github.com/CAU-LeadRead/LeadRead-SERVER/issues"
+		"url": "https://github.com/Catchi-Nichi/Catchinichi-SERVER/issues"
 	},
-	"homepage": "https://github.com/CAU-LeadRead/LeadRead-SERVER#readme",
+	"homepage": "https://github.com/Catchi-Nichi/Catchinichi-SERVER#readme",
 	"devDependencies": {
+		"dotenv": "^8.2.0",
 		"nodemon": "^2.0.7"
 	},
 	"dependencies": {
+		"bcrypt": "^5.0.1",
 		"cookie-parser": "^1.4.5",
 		"express": "^4.17.1",
 		"http-errors": "^1.8.0",
+		"jsonwebtoken": "^8.5.1",
 		"morgan": "^1.10.0",
 		"mysql2": "^2.2.5",
 		"sequelize": "^6.5.0",
-		"sequelize-cli": "^6.2.0"
+		"sequelize-cli": "^6.2.0",
+		"twilio": "^3.59.0"
 	}
 }
