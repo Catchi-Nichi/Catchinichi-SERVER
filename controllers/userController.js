@@ -76,4 +76,32 @@ module.exports = {
 
 		return res.status(statusCode.OK).send({ success: true, message: "사용 가능한 닉네임입니다." });
 	},
+	verifyPhone: async (req, res) => {
+		// 6자리 난수 생성
+		const randomNumber = Math.floor(Math.random() * 1000000) + 1;
+		try {
+			const { phone } = req.body;
+			const result = await twilio.messages.create({
+				body: `Catchi Nichi 인증번호 [${randomNumber}]를 입력해주세요`,
+				from: process.env.TWILIO_PHONE_NUMBER,
+				to: phone,
+			});
+			console.log(result);
+			if (result) {
+				return res.status(statusCode.OK).send({
+					success: true,
+					message: "인증번호가 전송되었습니다.",
+					randomNumber: randomNumber,
+				});
+			} else {
+				return res
+					.status(statusCode.INTERNAL_SERVER_ERROR)
+					.send({ success: false, message: "서버 내부 오류입니다." });
+			}
+		} catch (error) {
+			return res
+				.status(statusCode.INTERNAL_SERVER_ERROR)
+				.send({ success: false, message: "서버 내부 오류입니다." });
+		}
+	},
 };
