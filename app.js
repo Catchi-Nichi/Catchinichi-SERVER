@@ -6,19 +6,13 @@ const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 dotenv.config();
 //Router importing
-const userRouter = require("./routes/user");
+const indexRouter = require("./routes");
 const { sequelize } = require("./models");
-const { create } = require("domain");
 
 const app = express();
 //배포시에는 80 또는 443 사용 , http/https
 app.set("port", process.env.PORT || 8001);
-// nunjucks
-app.set("view engine", "html");
-nunjucks.configure("views", {
-	express: app,
-	watch: true,
-});
+
 // force: true 모델이 변경 시, 테이블을 지우고 다시 만듬, 실무에선 force 절대 쓰지 말기.
 // alter: true 데이터 유지하고 컬럼 변경, 하지만 기존데이터와 추가된 컬럼과의 에러가 날 수 있음.
 sequelize
@@ -29,7 +23,6 @@ sequelize
 	.catch((err) => {
 		console.dir(err);
 	});
-passportConfig();
 //middleware
 app.use(morgan("dev"));
 app.use(express.static(path.join(__dirname, "public")));
@@ -38,7 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 //Router
-app.user("/", indexRouter);
+app.use("/", indexRouter);
 
 //404 Error middleware
 app.use((req, res, next) => {
