@@ -58,4 +58,22 @@ module.exports = {
 
 		return res.status(statusCode.OK).send({ success: true, message: "사용 가능한 이메일입니다." });
 	},
+	checkNickName: async (req, res) => {
+		const { nick } = req.body;
+		if (!nick) {
+			return res
+				.status(statusCode.BAD_REQUEST)
+				.send({ success: false, message: "닉네임을 입력해주세요." });
+		}
+
+		const exUser = await User.findOne({ where: { nick } });
+		//이미 있는 아이디
+		if (exUser) {
+			return await res
+				.status(statusCode.BAD_REQUEST)
+				.send({ success: false, message: "이미 사용중인 닉네임입니다." });
+		}
+
+		return res.status(statusCode.OK).send({ success: true, message: "사용 가능한 닉네임입니다." });
+	},
 };
