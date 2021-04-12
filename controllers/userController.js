@@ -1,4 +1,4 @@
-const bcrpyt = require("bcrypt");
+const bcrypt = require("bcrypt");
 const User = require("../models/user");
 const statusCode = require("../module/statusCode");
 const jwt = require("../module/jwt");
@@ -20,7 +20,7 @@ module.exports = {
 					.send({ success: false, message: "이미 사용중인 이메일입니다." });
 			}
 			// 비밀번호 hash화, 12는 해쉬 난이도
-			const hashedPassword = await bcrpyt.hash(password, 12);
+			const hashedPassword = await bcrypt.hash(password, 12);
 			await User.create({
 				email: email,
 				nick,
@@ -99,6 +99,48 @@ module.exports = {
 					.send({ success: false, message: "서버 내부 오류입니다." });
 			}
 		} catch (error) {
+			return res
+				.status(statusCode.INTERNAL_SERVER_ERROR)
+				.send({ success: false, message: "서버 내부 오류입니다." });
+		}
+	},
+	signin: async (req, res) => {
+		const { email, password } = req.body;
+		if (!email || !password) {
+			res
+				.status(statusCode.BAD_REQUEST)
+				.send({ success: false, message: "이메일과 비밀번호를 입력해주세요." });
+		}
+		try {
+			const user = await User.findOne({ where: { email } });
+			if (!user) {
+				return await res
+					.status(statusCode.NOT_FOUND)
+					.send({ success: false, message: "가입되지 않은 이메일입니다." });
+			}
+			console.log(user.dataValues.password);
+
+			const comparePassword = await bcrypt.compare(password, user.dataValues.password);
+			console.log(comparePassword);
+			if (!comparePassword) {
+				return res.status(statusCode.BAD_REQUEST).send({
+					success: false,
+					message: "비밀번호가 올바르지 않습니다.",
+				});
+			}
+
+			const { token, refreshToken } = await jwt.sign(user.dataValues);
+			return res
+				.status(statusCode.OK)
+				.send({
+					success: true,
+					message: "로그인에 성공했습니다.",
+					accessToken: token,
+					refreshToken,
+					email,
+				});
+		} catch (err) {
+			console.log(err);
 			return res
 				.status(statusCode.INTERNAL_SERVER_ERROR)
 				.send({ success: false, message: "서버 내부 오류입니다." });
