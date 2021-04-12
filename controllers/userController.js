@@ -145,11 +145,12 @@ module.exports = {
 	kakao: async (req, res) => {
 		console.log(req.body);
 		const { email, gender, age, snsId } = req.body;
+
 		try {
 			const exUser = await User.findOne({ where: { email } });
 			//이미 있는 아이디
 			if (exUser) {
-				const { token, refreshToken } = await jwt.sign(email);
+				const { token, refreshToken } = await jwt.sign(exUser);
 				return await res.status(statusCode.OK).send({
 					success: true,
 					message: "로그인에 성공하였습니다.",

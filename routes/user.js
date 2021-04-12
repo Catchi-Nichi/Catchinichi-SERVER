@@ -158,4 +158,5 @@ router.post("/verifyPhone", UserController.verifyPhone); // 휴대폰 인증
 // router.get("/myRoom", middleware.userJwt, UserController.myReviw); // 나의 모임
 // router.post("/updateToken", middleware.userJwt, UserController.updateToken); // 디바이스 토큰 업데이트
 // router.get("/checkDeviceToken", UserController.checkDeviceToken);
+router.post("/kakao", UserController.kakao); // 카카오 로그인
 module.exports = router;
