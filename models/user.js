@@ -22,7 +22,7 @@ module.exports = class User extends Sequelize.Model {
 					allowNull: true,
 				},
 				phone: {
-					type: Sequelize.STRING(11),
+					type: Sequelize.STRING(13),
 					allowNull: true,
 				},
 				birth: {
@@ -40,6 +40,9 @@ module.exports = class User extends Sequelize.Model {
 				snsId: {
 					type: Sequelize.STRING(30),
 					allowNull: true,
+				},
+				token: {
+					type: Sequelize.STRING(255),
 				},
 			},
 			{
