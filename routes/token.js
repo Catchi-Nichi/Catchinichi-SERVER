@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const userJwt = require("../module/middlewares");
 
-router.use("/user", require("./user"));
-router.use("/auth", require("./token"));
+router.get("/request", userJwt.refreshToken);
 
 module.exports = router;
