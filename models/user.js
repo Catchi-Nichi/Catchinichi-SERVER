@@ -6,7 +6,6 @@ module.exports = class User extends Sequelize.Model {
 			{
 				email: {
 					type: Sequelize.STRING(40),
-					allowNull: true,
 					unique: true,
 					primaryKey: true,
 				},
@@ -25,8 +24,8 @@ module.exports = class User extends Sequelize.Model {
 					type: Sequelize.STRING(13),
 					allowNull: true,
 				},
-				birth: {
-					type: Sequelize.DATEONLY,
+				age: {
+					type: Sequelize.NUMBER,
 				},
 				gender: {
 					type: Sequelize.ENUM("male", "female"),
