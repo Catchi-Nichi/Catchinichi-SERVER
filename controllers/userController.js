@@ -145,11 +145,11 @@ module.exports = {
 	kakao: async (req, res) => {
 		console.log(req.body);
 		const { email, gender, age, snsId } = req.body;
-		const { token, refreshToken } = await jwt.sign(email);
 		try {
 			const exUser = await User.findOne({ where: { email } });
 			//이미 있는 아이디
 			if (exUser) {
+				const { token, refreshToken } = await jwt.sign(email);
 				return await res.status(statusCode.OK).send({
 					success: true,
 					message: "로그인에 성공하였습니다.",
@@ -165,6 +165,7 @@ module.exports = {
 				snsId,
 				provider: "kakao",
 			});
+			const { token, refreshToken } = await jwt.sign(email);
 			return await res.status(statusCode.OK).send({
 				success: true,
 				message: "로그인에 성공하였습니다.",
