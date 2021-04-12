@@ -161,7 +161,7 @@ module.exports = {
 			await User.create({
 				email: email,
 				gender,
-				age,
+				age: parseInt(age),
 				snsId: id,
 				provider: "kakao",
 			});
