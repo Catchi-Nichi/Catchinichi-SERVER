@@ -12,7 +12,6 @@ module.exports = class User extends Sequelize.Model {
 				nick: {
 					type: Sequelize.STRING(15),
 					allowNull: true,
-					unique: true,
 				},
 				//암호화(해쉬화)되면 길기 때문에 100글자
 				password: {

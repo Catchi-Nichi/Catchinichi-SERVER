@@ -159,14 +159,14 @@ module.exports = {
 					email,
 				});
 			}
-			await User.create({
+			const user = await User.create({
 				email,
 				gender,
 				age,
 				snsId,
 				provider: "kakao",
 			});
-			const { token, refreshToken } = await jwt.sign(email);
+			const { token, refreshToken } = await jwt.sign(user);
 			return await res.status(statusCode.OK).send({
 				success: true,
 				message: "로그인에 성공하였습니다.",
