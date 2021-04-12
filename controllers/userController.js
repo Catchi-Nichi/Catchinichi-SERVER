@@ -118,7 +118,6 @@ module.exports = {
 					.status(statusCode.NOT_FOUND)
 					.send({ success: false, message: "가입되지 않은 이메일입니다." });
 			}
-			console.log(user.dataValues.password);
 
 			const comparePassword = await bcrypt.compare(password, user.dataValues.password);
 			console.log(comparePassword);
@@ -130,18 +129,56 @@ module.exports = {
 			}
 
 			const { token, refreshToken } = await jwt.sign(user.dataValues);
+			return res.status(statusCode.OK).send({
+				success: true,
+				message: "로그인에 성공했습니다.",
+				accessToken: token,
+				refreshToken,
+				email,
+			});
+		} catch (err) {
+			console.log(err);
 			return res
-				.status(statusCode.OK)
-				.send({
+				.status(statusCode.INTERNAL_SERVER_ERROR)
+				.send({ success: false, message: "서버 내부 오류입니다." });
+		}
+	},
+	kakao: async (req, res) => {
+		console.log(req.body);
+		const { email, nick, phone, gender, birth, id } = req.body;
+
+		try {
+			const exUser = await User.findOne({ where: { email } });
+			//이미 있는 아이디
+			if (exUser) {
+				return await res.status(statusCode.OK).send({
 					success: true,
-					message: "로그인에 성공했습니다.",
+					message: "로그인에 성공하였습니다.",
 					accessToken: token,
 					refreshToken,
 					email,
 				});
+			}
+			await User.create({
+				email: email,
+				nick,
+				phone,
+				gender,
+				birth,
+				snsId: id,
+				provider: "kakao",
+			});
+			const { token, refreshToken } = await jwt.sign(email);
+			return await res.status(statusCode.OK).send({
+				success: true,
+				message: "로그인에 성공하였습니다.",
+				accessToken: token,
+				refreshToken,
+				email,
+			});
 		} catch (err) {
 			console.log(err);
-			return res
+			await res
 				.status(statusCode.INTERNAL_SERVER_ERROR)
 				.send({ success: false, message: "서버 내부 오류입니다." });
 		}
