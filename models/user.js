@@ -25,7 +25,7 @@ module.exports = class User extends Sequelize.Model {
 					allowNull: true,
 				},
 				age: {
-					type: Sequelize.NUMBER,
+					type: Sequelize.INTEGER,
 				},
 				gender: {
 					type: Sequelize.ENUM("male", "female"),
