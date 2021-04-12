@@ -40,7 +40,6 @@ module.exports = {
 			}
 			const user = await User.findOne({ where: { email } });
 			const { token } = user;
-			console.log(user.email);
 			if (refreshToken !== token) {
 				return -1;
 			}
