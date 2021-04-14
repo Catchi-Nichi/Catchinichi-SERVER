@@ -83,7 +83,7 @@ module.exports = {
 			const result = await twilio.messages.create({
 				body: `Catchi Nichi 인증번호 [${randomNumber}]를 입력해주세요`,
 				from: process.env.TWILIO_PHONE_NUMBER,
-				to: phone,
+				to: `+82${phone}`,
 			});
 			console.log(result);
 			if (result) {
