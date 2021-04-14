@@ -14,7 +14,7 @@ const options = {
 		host: "localhost:8001",
 		basePath: "/",
 	},
-	apis: [path.resolve(__dirname, "../routes/*.js")],
+	apis: [path.resolve(__dirname, "swagger.yaml")],
 };
 
 const specs = swaggersJsdoc(options);
