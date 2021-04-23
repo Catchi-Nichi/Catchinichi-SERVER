@@ -24,10 +24,10 @@ module.exports = {
 		const fragrance = req.params.fragrance;
 
 		try {
+			//향수 기본 데이터
 			const fragranceData = await Fragrance.findAll({
 				where: { kr_brand: brand, kr_name: fragrance },
 			});
-
 			return res.status(statusCode.OK).send({
 				success: true,
 				message: `${fragrance}의 정보를 불러왔습니다.`,
@@ -35,6 +35,10 @@ module.exports = {
 			});
 		} catch (err) {
 			console.log(err);
+			return res.status(statusCode.INTERNAL_SERVER_ERROR).send({
+				success: false,
+				message: "향수를 불러오는 도중 에러가 발생했습니다.",
+			});
 		}
 	},
 };
