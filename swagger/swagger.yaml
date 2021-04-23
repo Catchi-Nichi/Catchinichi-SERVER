@@ -1,23 +1,15 @@
 tags:
-  name: User
-  description: 사용자 관련 API
-definitions:
-  User:
-    type: "object"
-    properties:
-      email:
-        type: "string"
-      password:
-        type: "string"
-      nick:
-        type: "string"
-      phone:
-        type: "string"
-      gender:
-        type: "string"
-      age:
-        type: "integer"
+  - name: User
+    description: 사용자 관련 API
+  - name: Fragrance
+    definitions: 향수 관련 API
+  - name: Search
+    definitions: 검색 관련 API
+schemes:
+  - "https"
+  - "http"
 
+#유저 API
 /user/signup:
   post:
     description: 회원가입
@@ -124,3 +116,106 @@ definitions:
         description: "인증번호가 전송되었습니다."
       "400":
         description: "서버 내부 오류입니다."
+/auth/request:
+  get:
+    description: AccessToken 재발급
+    tags: [User]
+    consumes:
+      - application/json
+    parameters:
+      - name: "RefreshToken"
+        in: "header"
+        description: "리프레시 토큰"
+        required: true
+        type: "string"
+    responses:
+      "200":
+        description: "액세스토큰을 재발급합니다."
+      "400":
+        description: "토큰 발급에 문제가 발생했습니다."
+
+#향수 API
+/fragrance/all:
+  get:
+    description: 모든 향수 불러오기
+    tags: [Fragrance]
+    consumes:
+      - application/json
+    responses:
+      "200":
+        description: "향수 정보를 가져옵니다."
+      "400":
+        description: "향수를 가져오는데 문제가 생겼습니다."
+/fragrance/{brand}/{fragrance}:
+  get:
+    description: 원하는 향수 불러오기
+    tags: [Fragrance]
+    consumes:
+      - application/json
+    parameters:
+      - name: "brand"
+        in: "path"
+        description: "브랜드 이름(한글)"
+        required: true
+        type: "string"
+      - name: "fragrance"
+        in: "path"
+        description: "향수 이름(한글)"
+        required: true
+        type: "string"
+    responses:
+      "200":
+        description: "원하는 향수 정보를 가져옵니다."
+
+      "400":
+        description: "향수를 가져오는데 문제가 생겼습니다."
+/search/{searchText}:
+  get:
+    description: 브랜드 및 향수 검색
+    tags: [Fragrance]
+    consumes:
+      - application/json
+    parameters:
+      - name: "searchText"
+        in: "path"
+        description: "검색어"
+        required: true
+        type: "string"
+    responses:
+      "200":
+        description: "검색 결과가 나옵니다."
+
+      "400":
+        description: "검색 시 문제가 발생하였습니다."
+
+definitions:
+  User:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+      nick:
+        type: "string"
+      phone:
+        type: "string"
+      gender:
+        type: "string"
+      age:
+        type: "integer"
+  Fragrance:
+    type: "objecet"
+    properties:
+      brand:
+        type: "string"
+      kr_brand:
+        type: "string"
+      en_name:
+        type: "string"
+      kr_name:
+        type: "string"
+      img:
+        type: "string"
+      likes:
+        type: "integer"
