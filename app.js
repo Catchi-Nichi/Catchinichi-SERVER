@@ -12,7 +12,7 @@ const { sequelize } = require("./models");
 
 const app = express();
 //배포시에는 80 또는 443 사용 , http/https
-app.set("port", process.env.PORT || 443);
+app.set("port", process.env.PORT || 8001);
 
 // force: true 모델이 변경 시, 테이블을 지우고 다시 만듬, 실무에선 force 절대 쓰지 말기.
 // alter: true 데이터 유지하고 컬럼 변경, 하지만 기존데이터와 추가된 컬럼과의 에러가 날 수 있음.
