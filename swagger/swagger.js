@@ -11,7 +11,7 @@ const options = {
 			version: "1.0.0",
 			description: "캡스톤디자인(2) 1조 API 문서",
 		},
-		host: "localhost:8001",
+		host: "catchi-nichi.tk",
 		basePath: "/",
 	},
 	apis: [path.resolve(__dirname, "swagger.yaml")],
