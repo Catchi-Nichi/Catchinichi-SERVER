@@ -2,6 +2,7 @@ const dotenv = require("dotenv");
 const createError = require("http-errors");
 const express = require("express");
 const path = require("path");
+const cors = require("cors");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const swaggerDocs = require("./swagger/swagger");
@@ -30,6 +31,12 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(
+	cors({
+		origin: true,
+		credentials: true,
+	})
+);
 app.use(swaggerDocs);
 
 //Router
