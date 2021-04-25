@@ -38,6 +38,33 @@ module.exports = {
 				.send({ success: false, message: "서버 내부 오류입니다." });
 		}
 	},
+	addNick: async (req, res) => {
+		const { nick, email } = req.body;
+
+		if (!nick) {
+			return res
+				.status(statusCode.BAD_REQUEST)
+				.send({ success: false, message: "닉네임을 입력해주세요." });
+		}
+		try {
+			const exUser = await User.findOne({ where: { nick } });
+			if (exUser) {
+				return await res
+					.status(statusCode.BAD_REQUEST)
+					.send({ success: false, message: "이미 사용중인 닉네임입니다." });
+			}
+			await User.update({ nick }, { where: email });
+
+			return await res
+				.status(statusCode.OK)
+				.send({ success: true, message: "닉네임이 성공적으로 등록되었습니다.", nick });
+		} catch (err) {
+			console.log(err);
+			await res
+				.status(statusCode.INTERNAL_SERVER_ERROR)
+				.send({ success: false, message: "서버 내부 오류입니다." });
+		}
+	},
 	checkEmail: async (req, res) => {
 		const { email } = req.body;
 
