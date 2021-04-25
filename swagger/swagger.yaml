@@ -19,14 +19,55 @@ schemes:
     parameters:
       - name: "body"
         in: "body"
-        description: "회원 가입에 필요한 email, nick, password, phone, gender, birth가 담긴 body"
+        description: "회원 가입에 필요한 email, password, phone, gender, age가 담긴 body"
         required: true
         schema:
-          $ref: "#/definitions/User"
+          type: object
+          properties:
+            email:
+              type: string
+              example: apitest@gmail.com
+            password:
+              type: string
+              example: qwerasdf
+            phone:
+              type: string
+              example: 01012345678
+            gender:
+              type: string
+              example: female
+            age:
+              type: integer
+              example: 25
     responses:
       "200":
         description: "회원가입에 성공하였습니다"
 
+/user/addNick:
+  post:
+    description: 닉네임 등록
+    tags: [User]
+    produces:
+      - "application/json"
+    parameters:
+      - name: "body"
+        in: "body"
+        description: "회원가입 후 닉네임 등록"
+        required: true
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              example: test@gmail.com
+            nick:
+              type: string
+              example: test_nick1
+    responses:
+      "200":
+        description: "닉네임 등록에 성공했습니다."
+      "400":
+        description: "닉네임 등록에 실패했습니다."
 /user/signin:
   post:
     description: 로그인
