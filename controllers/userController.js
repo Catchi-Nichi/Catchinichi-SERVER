@@ -16,7 +16,7 @@ module.exports = {
 			//이미 있는 아이디
 			if (exUser) {
 				return await res
-					.status(statusCode.BAD_REQUEST)
+					.status(statusCode.OK)
 					.send({ success: false, message: "이미 사용중인 이메일입니다." });
 			}
 			// 비밀번호 hash화, 12는 해쉬 난이도
@@ -42,15 +42,13 @@ module.exports = {
 		const { nick, email } = req.body;
 
 		if (!nick) {
-			return res
-				.status(statusCode.BAD_REQUEST)
-				.send({ success: false, message: "닉네임을 입력해주세요." });
+			return res.status(statusCode.OK).send({ success: false, message: "닉네임을 입력해주세요." });
 		}
 		try {
 			const exUser = await User.findOne({ where: { nick } });
 			if (exUser) {
 				return await res
-					.status(statusCode.BAD_REQUEST)
+					.status(statusCode.OK)
 					.send({ success: false, message: "이미 사용중인 닉네임입니다." });
 			}
 			await User.update({ nick }, { where: email });
@@ -69,16 +67,14 @@ module.exports = {
 		const { email } = req.body;
 
 		if (!email) {
-			return res
-				.status(statusCode.BAD_REQUEST)
-				.send({ success: false, message: "이메일을 입력해주세요." });
+			return res.status(statusCode.OK).send({ success: false, message: "이메일을 입력해주세요." });
 		}
 
 		const exUser = await User.findOne({ where: { email } });
 		//이미 있는 아이디
 		if (exUser) {
 			return await res
-				.status(statusCode.BAD_REQUEST)
+				.status(statusCode.OK)
 				.send({ success: false, message: "이미 사용중인 이메일입니다." });
 		}
 
@@ -87,16 +83,14 @@ module.exports = {
 	checkNickName: async (req, res) => {
 		const { nick } = req.body;
 		if (!nick) {
-			return res
-				.status(statusCode.BAD_REQUEST)
-				.send({ success: false, message: "닉네임을 입력해주세요." });
+			return res.status(statusCode.OK).send({ success: false, message: "닉네임을 입력해주세요." });
 		}
 
 		const exUser = await User.findOne({ where: { nick } });
 		//이미 있는 아이디
 		if (exUser) {
 			return await res
-				.status(statusCode.BAD_REQUEST)
+				.status(statusCode.OK)
 				.send({ success: false, message: "이미 사용중인 닉네임입니다." });
 		}
 
@@ -135,21 +129,21 @@ module.exports = {
 		try {
 			if (!email || !password) {
 				res
-					.status(statusCode.BAD_REQUEST)
+					.status(statusCode.OK)
 					.send({ success: false, message: "이메일과 비밀번호를 입력해주세요." });
 			}
 
 			const user = await User.findOne({ where: { email } });
 			if (!user) {
 				return await res
-					.status(statusCode.NOT_FOUND)
+					.status(statusCode.OK)
 					.send({ success: false, message: "가입되지 않은 이메일입니다." });
 			}
 
 			if (password) {
 				const comparePassword = await bcrypt.compare(password, user.dataValues.password);
 				if (!comparePassword) {
-					return res.status(statusCode.BAD_REQUEST).send({
+					return res.status(statusCode.OK).send({
 						success: false,
 						message: "비밀번호가 올바르지 않습니다.",
 					});
