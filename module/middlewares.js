@@ -71,4 +71,9 @@ module.exports = {
 			console.log(err);
 		}
 	},
+	checkIP: (req, res, next) => {
+		const ip = req.header("x-forwarded-for") || req.connection.remoteAddress;
+		console.log("Access ip:" + ip);
+		next();
+	},
 };

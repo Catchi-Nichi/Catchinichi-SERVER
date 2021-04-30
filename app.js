@@ -10,7 +10,7 @@ dotenv.config();
 //Router importing
 const indexRouter = require("./routes");
 const { sequelize } = require("./models");
-
+const { checkIP } = require("./module/middlewares");
 const app = express();
 //배포시에는 80 또는 443 사용 , http/https
 app.set("port", process.env.PORT || 8001);
@@ -37,6 +37,7 @@ app.use(
 		credentials: true,
 	})
 );
+app.use(checkIP);
 app.use(swaggerDocs);
 
 //Router
