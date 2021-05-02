@@ -44,6 +44,7 @@ module.exports = {
 		if (!nick) {
 			return res.status(statusCode.OK).send({ success: false, message: "닉네임을 입력해주세요." });
 		}
+
 		try {
 			const exUser = await User.findOne({ where: { nick } });
 			if (exUser) {
@@ -51,7 +52,8 @@ module.exports = {
 					.status(statusCode.OK)
 					.send({ success: false, message: "이미 사용중인 닉네임입니다." });
 			}
-			await User.update({ nick }, { where: email });
+
+			await User.update({ nick }, { where: { email } });
 
 			return await res
 				.status(statusCode.OK)
