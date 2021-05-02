@@ -9,7 +9,7 @@ const twilio = require("twilio")(accountSid, authToken);
 module.exports = {
 	signup: async (req, res) => {
 		console.log(req.body);
-		const { email, nick, password, phone, gender, age } = req.body;
+		const { email, password, phone, gender, age } = req.body;
 
 		try {
 			const exUser = await User.findOne({ where: { email } });
@@ -23,7 +23,6 @@ module.exports = {
 			const hashedPassword = await bcrypt.hash(password, 12);
 			await User.create({
 				email,
-				nick,
 				password: hashedPassword,
 				phone,
 				gender,
@@ -169,7 +168,7 @@ module.exports = {
 	},
 	kakao: async (req, res) => {
 		console.log(req.body);
-		const { email, nick, gender, age, snsId } = req.body;
+		const { email, gender, age, snsId } = req.body;
 
 		try {
 			const exUser = await User.findOne({ where: { email } });
@@ -186,7 +185,6 @@ module.exports = {
 			}
 			const user = await User.create({
 				email,
-				nick,
 				gender,
 				age,
 				snsId,
