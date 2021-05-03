@@ -3,7 +3,7 @@ const statusCode = require("../module/statusCode");
 module.exports = {
 	fragranceAll: async (req, res) => {
 		try {
-			const fragranceList = await Fragrance.findAll();
+			const fragranceList = await Fragrance.findAll({ order: [["likes", "DESC"]], limit: 10 });
 			const countingList = fragranceList.length;
 			return res.status(statusCode.OK).send({
 				success: true,

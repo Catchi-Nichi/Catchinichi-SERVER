@@ -7,7 +7,7 @@ module.exports = {
 		let searchText = req.params.searchText;
 		searchText = `%${searchText.replace(" ", "%")}%`;
 		const query =
-			'select * from fragrances where replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText';
+			'select * from fragrances where replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText order by likes DESC';
 		try {
 			const searchList = await sequelize.query(query, {
 				replacements: { searchText: searchText },
