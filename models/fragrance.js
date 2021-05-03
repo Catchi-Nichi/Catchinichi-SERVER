@@ -10,6 +10,7 @@ module.exports = class Fragrance extends Sequelize.Model {
 				},
 				kr_brand: {
 					type: Sequelize.STRING(20),
+					primaryKey: true,
 				},
 				en_name: {
 					type: Sequelize.STRING(100),
@@ -43,7 +44,7 @@ module.exports = class Fragrance extends Sequelize.Model {
 		);
 	}
 
-	// static associate(db) {
-	// 	db.User.hasMany(db.Review);
-	// }
+	static associate(db) {
+		db.Fragrance.hasMany(db.Review);
+	}
 };
