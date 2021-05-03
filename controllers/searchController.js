@@ -5,7 +5,8 @@ const { sequelize } = require("../models");
 module.exports = {
 	search: async (req, res) => {
 		let searchText = req.params.searchText;
-		searchText = `%${searchText.replace(" ", "%")}%`;
+		searchText = `%${searchText.replace(/ /gi, "%")}%`;
+		console.log(searchText);
 		const query =
 			'select * from fragrances where replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText order by likes DESC';
 		try {
