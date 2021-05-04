@@ -8,7 +8,6 @@ tags:
 schemes:
   - "https"
   - "http"
-
 #유저 API
 /user/signup:
   post:
@@ -210,7 +209,7 @@ schemes:
 
       "400":
         description: "향수를 가져오는데 문제가 생겼습니다."
-/search/{searchText}:
+/search:
   get:
     description: 브랜드 및 향수 검색
     tags: [Fragrance]
@@ -218,7 +217,7 @@ schemes:
       - application/json
     parameters:
       - name: "searchText"
-        in: "path"
+        in: "query"
         description: "검색어"
         required: true
         type: "string"
