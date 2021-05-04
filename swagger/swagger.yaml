@@ -221,6 +221,18 @@ schemes:
         description: "검색어"
         required: true
         type: "string"
+      - name: "order"
+        in: "query"
+        description: "순서"
+        required: true
+        type: "array"
+        items:
+          type: "string"
+          enum:
+            - "likes"
+            - "countingReview"
+            - "avgStars"
+          default: "likes"
     responses:
       "200":
         description: "검색 결과가 나옵니다."
