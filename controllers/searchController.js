@@ -4,7 +4,7 @@ const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
 module.exports = {
 	search: async (req, res) => {
-		let searchText = req.params.searchText;
+		let searchText = req.query.searchText;
 		searchText = `%${searchText.replace(/ /gi, "%")}%`;
 		console.log(searchText);
 		const query =
