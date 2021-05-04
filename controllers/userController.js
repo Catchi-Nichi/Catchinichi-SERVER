@@ -137,6 +137,7 @@ module.exports = {
 			}
 
 			const user = await User.findOne({ where: { email } });
+			const { nick } = user.dataValues;
 			if (!user) {
 				return await res
 					.status(statusCode.OK)
