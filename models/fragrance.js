@@ -27,6 +27,14 @@ module.exports = class Fragrance extends Sequelize.Model {
 				likes: {
 					type: Sequelize.INTEGER,
 				},
+				countingReview: {
+					type: Sequelize.INTEGER,
+					defaultValue: 0,
+				},
+				avgStars: {
+					type: Sequelize.DECIMAL(3, 2),
+					defaultValue: 0,
+				},
 			},
 			{
 				sequelize,
