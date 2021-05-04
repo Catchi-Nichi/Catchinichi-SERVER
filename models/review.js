@@ -1,19 +1,14 @@
 const Sequelize = require("sequelize");
 
-module.exports = class Fragrance extends Sequelize.Model {
+module.exports = class Review extends Sequelize.Model {
 	static init(sequelize) {
 		return super.init(
 			{
-				nick: {
-					type: Sequelize.STRING(15),
-					primaryKey: true,
-				},
 				kr_brand: {
 					type: Sequelize.STRING(20),
 				},
 				kr_name: {
 					type: Sequelize.STRING(45),
-					primaryKey: true,
 				},
 				stars: {
 					type: Sequelize.DECIMAL(2, 1),
@@ -26,6 +21,12 @@ module.exports = class Fragrance extends Sequelize.Model {
 				},
 				comment: {
 					type: Sequelize.STRING(255),
+				},
+				brand: {
+					type: Sequelize.STRING(50),
+				},
+				en_name: {
+					type: Sequelize.STRING(100),
 				},
 			},
 			{

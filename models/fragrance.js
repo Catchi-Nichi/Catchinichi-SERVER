@@ -10,7 +10,6 @@ module.exports = class Fragrance extends Sequelize.Model {
 				},
 				kr_brand: {
 					type: Sequelize.STRING(20),
-					primaryKey: true,
 				},
 				en_name: {
 					type: Sequelize.STRING(100),

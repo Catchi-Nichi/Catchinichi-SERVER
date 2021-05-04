@@ -7,10 +7,10 @@ module.exports = class User extends Sequelize.Model {
 				email: {
 					type: Sequelize.STRING(40),
 					unique: true,
-					primaryKey: true,
 				},
 				nick: {
 					type: Sequelize.STRING(15),
+					primaryKey: true,
 					allowNull: true,
 				},
 				//암호화(해쉬화)되면 길기 때문에 100글자
