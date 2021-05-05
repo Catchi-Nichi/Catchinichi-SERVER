@@ -29,6 +29,8 @@ module.exports = {
 					type: QueryTypes.SELECT,
 					raw: true,
 				});
+
+				console.log(countingList);
 				return res.status(statusCode.OK).send({
 					success: true,
 					message: `${countingList}개의 향수가 검색되었습니다.`,

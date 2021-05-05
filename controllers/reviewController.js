@@ -24,10 +24,8 @@ module.exports = {
 			);
 
 			const fragrance = await Fragrance.findOne({ where: { brand, en_name } });
-
 			let { avgStars, countingReview } = fragrance.dataValues;
-			avgStars = (avgStars * (countingReview - 1) + stars) / countingReview;
-
+			avgStars = (avgStars * (countingReview - 1) + parseInt(stars)) / countingReview;
 			await Fragrance.update({ avgStars }, { where: { brand, en_name } });
 
 			return res
