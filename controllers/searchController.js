@@ -12,18 +12,41 @@ module.exports = {
 			offset = 0;
 		}
 		searchText = `%${searchText.replace(/ /gi, "%")}%`;
-		const query = `select * from fragrances where replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText order by ${order} DESC limit ${limit} offset ${offset}`;
-		try {
-			const searchList = await sequelize.query(query, {
-				replacements: { searchText: searchText, order: order },
-				type: QueryTypes.SELECT,
-				raw: true,
-			});
+		const SQL_SEARCH_MUCH_QUERY = `select count(*) as counting from fragrances where replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText`;
 
-			const countingList = searchList.length;
-			res
-				.status(statusCode.OK)
-				.send({ success: true, message: `${countingList}개의 향수가 검색되었습니다.`, searchList });
+		const SQL_SEARCH_QUERY = `select * from fragrances where replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText order by ${order} DESC limit ${limit} offset ${offset}`;
+		try {
+			if (offset == 0) {
+				const lengthList = await sequelize.query(SQL_SEARCH_MUCH_QUERY, {
+					replacements: { searchText: searchText, order: order },
+					type: QueryTypes.SELECT,
+					raw: true,
+				});
+				const countingList = await lengthList[0].counting;
+
+				const searchList = await sequelize.query(SQL_SEARCH_QUERY, {
+					replacements: { searchText: searchText, order: order },
+					type: QueryTypes.SELECT,
+					raw: true,
+				});
+				await res.status(statusCode.OK).send({
+					success: true,
+					message: `${countingList}개의 향수가 검색되었습니다.`,
+					searchList,
+				});
+			} else {
+				const searchList = await sequelize.query(SQL_SEARCH_QUERY, {
+					replacements: { searchText: searchText, order: order },
+					type: QueryTypes.SELECT,
+					raw: true,
+				});
+				res.status(statusCode.OK).send({
+					success: true,
+					message: `${countingList}개의 향수가 검색되었습니다.`,
+					nextOffset: offset + limit,
+					searchList,
+				});
+			}
 		} catch (err) {
 			console.log(err);
 			return res
