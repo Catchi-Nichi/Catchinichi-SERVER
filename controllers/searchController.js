@@ -33,6 +33,7 @@ module.exports = {
 					success: true,
 					message: `${countingList}개의 향수가 검색되었습니다.`,
 					searchList,
+					count: countingList,
 				});
 			} else {
 				const searchList = await sequelize.query(SQL_SEARCH_QUERY, {
