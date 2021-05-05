@@ -223,7 +223,7 @@ schemes:
         type: "string"
       - name: "order"
         in: "query"
-        description: "순서(안쓰면 전체 불러오기)"
+        description: "순서"
         required: true
         type: "array"
         items:
@@ -235,13 +235,13 @@ schemes:
           default: "likes"
       - name: "limit"
         in: "query"
-        description: "개수"
-        required: true
+        description: "개수(안쓰면 전체 불러오기)"
+        required: false
         type: "integer"
       - name: "offset"
         in: "query"
         description: "몇번째부터 불러올지(안쓰면 0번째부터)"
-        required: true
+        required: false
         type: "integer"
     responses:
       "200":
