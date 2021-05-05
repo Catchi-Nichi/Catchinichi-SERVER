@@ -258,7 +258,45 @@ schemes:
     consumes:
       - application/json
     parameters:
+      - in: body
+        name: nick
+        description: "리뷰 등록"
+        schema:
+          type: object
+          properties:
+            nick:
+              type: string
+              example: 1
+            brand:
+              type: string
+              example: "diptyque"
+            en_name:
+              type: string
+              example: "l'eau de néroli eau de toilette"
+            kr_brand:
+              type: string
+              example: "딥티크"
+            kr_name:
+              type: string
+              example: "로 드 네롤리"
+            mood:
+              type: string
+              example: "따뜻한"
+            category:
+              type: integer
+              example: 1
+            stars:
+              type: integer
+              example: 5
+            longevity:
+              type: integer
+              example: 3
+        responses:
+          "200":
+            description: "검색 결과가 나옵니다."
 
+          "400":
+            description: "검색 시 문제가 발생하였습니다."
 definitions:
   User:
     type: "object"
