@@ -16,6 +16,9 @@ module.exports = class Review extends Sequelize.Model {
 				longevity: {
 					type: Sequelize.INTEGER,
 				},
+				category: {
+					type: Sequelize.INTEGER,
+				},
 				mood: {
 					type: Sequelize.STRING(10),
 				},
