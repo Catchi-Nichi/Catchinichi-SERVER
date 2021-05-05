@@ -212,7 +212,7 @@ schemes:
 /search:
   get:
     description: 브랜드 및 향수 검색
-    tags: [Fragrance]
+    tags: [Search]
     consumes:
       - application/json
     parameters:
@@ -223,7 +223,7 @@ schemes:
         type: "string"
       - name: "order"
         in: "query"
-        description: "순서"
+        description: "순서(안쓰면 전체 불러오기)"
         required: true
         type: "array"
         items:
@@ -233,12 +233,31 @@ schemes:
             - "countingReview"
             - "avgStars"
           default: "likes"
+      - name: "limit"
+        in: "query"
+        description: "개수"
+        required: true
+        type: "integer"
+      - name: "offset"
+        in: "query"
+        description: "몇번째부터 불러올지(안쓰면 0번째부터)"
+        required: true
+        type: "integer"
     responses:
       "200":
         description: "검색 결과가 나옵니다."
 
       "400":
         description: "검색 시 문제가 발생하였습니다."
+
+#리뷰 관련 API
+/review/addReview:
+  post:
+    description: "향수 리뷰 등록"
+    tags: [Review]
+    consumes:
+      - application/json
+    parameters:
 
 definitions:
   User:
@@ -257,7 +276,7 @@ definitions:
       age:
         type: "integer"
   Fragrance:
-    type: "objecet"
+    type: "object"
     properties:
       brand:
         type: "string"
@@ -271,3 +290,26 @@ definitions:
         type: "string"
       likes:
         type: "integer"
+      avgStars:
+        type: "decimal"
+      countingReview:
+        type: "integer"
+  Review:
+    type: "object"
+    properties:
+      brand:
+        type: "string"
+      kr_brand:
+        type: "string"
+      en_name:
+        type: "string"
+      kr_name:
+        type: "string"
+      stars:
+        type: "integer"
+      longevity:
+        type: "integer"
+      mood:
+        type: "string"
+      comment:
+        type: "string"
