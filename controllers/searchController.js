@@ -4,10 +4,15 @@ const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
 module.exports = {
 	search: async (req, res) => {
-		let { searchText, order } = req.query;
+		let { searchText, order, limit, offset } = req.query;
+		if (limit == undefined) {
+			limit = 999;
+		}
+		if (offset == undefined) {
+			offset = 0;
+		}
 		searchText = `%${searchText.replace(/ /gi, "%")}%`;
-		console.log(searchText);
-		const query = `select * from fragrances where replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText order by ${order} DESC`;
+		const query = `select * from fragrances where replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText order by ${order} DESC limit ${limit} offset ${offset}`;
 		try {
 			const searchList = await sequelize.query(query, {
 				replacements: { searchText: searchText, order: order },
