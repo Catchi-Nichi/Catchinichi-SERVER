@@ -23,7 +23,7 @@ module.exports = {
 				{ where: { brand, en_name } }
 			);
 
-			const fragrance = await Fragrance.findOne({ where: { kr_brand, kr_name } });
+			const fragrance = await Fragrance.findOne({ where: { brand, en_name } });
 
 			let { avgStars, countingReview } = fragrance.dataValues;
 			avgStars = (avgStars * (countingReview - 1) + stars) / countingReview;
