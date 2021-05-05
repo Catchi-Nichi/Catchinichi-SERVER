@@ -29,7 +29,7 @@ module.exports = {
 					type: QueryTypes.SELECT,
 					raw: true,
 				});
-				await res.status(statusCode.OK).send({
+				return res.status(statusCode.OK).send({
 					success: true,
 					message: `${countingList}개의 향수가 검색되었습니다.`,
 					searchList,
@@ -42,8 +42,7 @@ module.exports = {
 				});
 				res.status(statusCode.OK).send({
 					success: true,
-					message: `${countingList}개의 향수가 검색되었습니다.`,
-					nextOffset: offset + limit,
+					message: `향수가 검색되었습니다.`,
 					searchList,
 				});
 			}
