@@ -8,5 +8,6 @@ router.use("/user", require("./user"));
 router.use("/auth", require("./token"));
 router.use("/fragrance", require("./fragrance"));
 router.use("/search", require("./search"));
+router.use("/review", require("./review"));
 
 module.exports = router;

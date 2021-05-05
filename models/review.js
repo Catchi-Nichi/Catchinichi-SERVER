@@ -31,7 +31,7 @@ module.exports = class Review extends Sequelize.Model {
 			},
 			{
 				sequelize,
-				timestamps: true,
+				timestamps: false,
 				underscored: false,
 				modelName: "Review",
 				tableName: "reviews",
