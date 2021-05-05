@@ -5,13 +5,22 @@ const Sequelize = require("sequelize");
 
 module.exports = {
 	addReview: async (req, res) => {
-		const { nick, kr_brand, kr_name, stars, longevity, mood, comment } = req.body;
+		const { nick, brand, en_name, category, stars, longevity, mood, comment } = req.body;
 
 		try {
-			await Review.create({ UserNick: nick, kr_brand, kr_name, stars, longevity, mood, comment });
+			await Review.create({
+				UserNick: nick,
+				brand,
+				en_name,
+				category,
+				stars,
+				longevity,
+				mood,
+				comment,
+			});
 			await Fragrance.update(
 				{ countingReview: Sequelize.literal("countingReview + 1") },
-				{ where: { kr_name } }
+				{ where: { brand, en_name } }
 			);
 
 			const fragrance = await Fragrance.findOne({ where: { kr_brand, kr_name } });
@@ -19,7 +28,7 @@ module.exports = {
 			let { avgStars, countingReview } = fragrance.dataValues;
 			avgStars = (avgStars * (countingReview - 1) + stars) / countingReview;
 
-			await Fragrance.update({ avgStars }, { where: { kr_brand, kr_name } });
+			await Fragrance.update({ avgStars }, { where: { brand, en_name } });
 
 			return res
 				.status(statusCode.OK)
