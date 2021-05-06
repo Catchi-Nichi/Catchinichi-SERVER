@@ -5,6 +5,8 @@ tags:
     definitions: 향수 관련 API
   - name: Search
     definitions: 검색 관련 API
+  - name: Review
+    definitions: 리뷰 관련 API
 schemes:
   - "https"
   - "http"
@@ -294,9 +296,49 @@ schemes:
         responses:
           "200":
             description: "검색 결과가 나옵니다."
-
           "400":
             description: "검색 시 문제가 발생하였습니다."
+/review/{nick}:
+  get:
+    description: "내가 쓴 리뷰 불러오기"
+    tags: [Review]
+    consumes:
+      - application/json
+    parameters:
+      - name: "nick"
+        in: "path"
+        description: "닉네임"
+        required: true
+        type: "string"
+        example: "capstone"
+    responses:
+      "200":
+        description: "리뷰를 불러옵니다."
+      "500":
+        description: "검색 시 문제가 발생하였습니다."
+
+/review/{brand}/{fragrance}:
+  get:
+    description: "해당 향수 리뷰 불러오기"
+    tags: [Review]
+    consumes:
+      - application/json
+    parameters:
+      - name: "brand"
+        in: "path"
+        description: "브랜드 이름(한글)"
+        required: true
+        type: "string"
+      - name: "fragrance"
+        in: "path"
+        description: "향수 이름(한글)"
+        required: true
+        type: "string"
+    responses:
+      "200":
+        description: "해당 향수 리뷰를 가져옵니다."
+      "500":
+        description: "리뷰를 가져오는데 문제가 생겼습니다."
 definitions:
   User:
     type: "object"
