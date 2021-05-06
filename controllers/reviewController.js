@@ -5,13 +5,26 @@ const Sequelize = require("sequelize");
 
 module.exports = {
 	addReview: async (req, res) => {
-		const { nick, brand, en_name, category, stars, longevity, mood, comment } = req.body;
+		const {
+			nick,
+			brand,
+			en_name,
+			kr_name,
+			kr_brand,
+			category,
+			stars,
+			longevity,
+			mood,
+			comment,
+		} = req.body;
 
 		try {
 			await Review.create({
 				UserNick: nick,
 				brand,
 				en_name,
+				kr_brand,
+				kr_name,
 				category,
 				stars,
 				longevity,
@@ -36,6 +49,53 @@ module.exports = {
 			return res
 				.status(statusCode.INTERNAL_SERVER_ERROR)
 				.send({ success: false, message: "서버 내부 오류입니다." });
+		}
+	},
+	loadReview: async (req, res) => {
+		const { brand, fragrance } = req.params;
+
+		try {
+			const review = await Review.findAll({
+				where: {
+					kr_brand: brand,
+					kr_name: fragrance,
+				},
+			});
+
+			const countingReview = review.length;
+			return res.status(statusCode.OK).send({
+				success: true,
+				message: "리뷰를 불러왔습니다.",
+				review,
+				countingReview,
+			});
+		} catch (err) {
+			console.log(err);
+			return res.status(statusCode.INTERNAL_SERVER_ERROR).send({
+				success: false,
+				message: "리뷰를 불러오는 도중 에러가 발생했습니다.",
+			});
+		}
+	},
+	myReview: async (req, res) => {
+		const { nick } = req.params;
+
+		try {
+			const review = await Review.findAll({ where: { Usernick: nick } });
+
+			const countingReview = review.length;
+			return res.status(statusCode.OK).send({
+				success: true,
+				message: "리뷰를 불러왔습니다.",
+				review,
+				countingReview,
+			});
+		} catch (err) {
+			console.log(err);
+			return res.status(statusCode.INTERNAL_SERVER_ERROR).send({
+				success: false,
+				message: "리뷰를 불러오는 도중 에러가 발생했습니다.",
+			});
 		}
 	},
 };
