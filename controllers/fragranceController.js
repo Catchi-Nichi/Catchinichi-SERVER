@@ -20,8 +20,7 @@ module.exports = {
 	},
 
 	fragrance: async (req, res) => {
-		const brand = req.params.brand;
-		const fragrance = req.params.fragrance;
+		const { brand, fragrance } = req.params;
 
 		try {
 			//향수 기본 데이터
