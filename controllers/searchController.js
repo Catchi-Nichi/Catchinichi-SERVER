@@ -77,12 +77,12 @@ module.exports = {
 			});
 		}
 	},
-	pictureBase64: async (req, res) => {
+	pictureBase64: (req, res) => {
 		const { file } = req.body;
 		const buff = Buffer.from(file, "base64");
 		try {
 			const filename = `/search/${Date.now()}.jpg`;
-			await fs.writeFile(filename, buff);
+			fs.writeFile(filename, buff);
 			return res.status(statusCode.OK).send({
 				success: true,
 				message: "이미지가 저장되었습니다",
