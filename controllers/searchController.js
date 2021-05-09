@@ -1,10 +1,9 @@
-const Fragrance = require("../models/fragrance");
 const statusCode = require("../module/statusCode");
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
 module.exports = {
 	search: async (req, res) => {
-		let { searchText, order, limit, offset } = req.query;
+		let { searchText, order, limit, offset, category } = req.query;
 		if (limit == undefined) {
 			limit = 999;
 		}
@@ -12,20 +11,21 @@ module.exports = {
 			offset = 0;
 		}
 		searchText = `%${searchText.replace(/ /gi, "%")}%`;
-		const SQL_SEARCH_MUCH_QUERY = `select count(*) as counting from fragrances where replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText`;
 
-		const SQL_SEARCH_QUERY = `select * from fragrances where replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText order by ${order} DESC limit ${limit} offset ${offset}`;
+		const SQL_SEARCH_MUCH_QUERY = `select count(*) as counting from fragrances where category = ${category} and (replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText)`;
+
+		const SQL_SEARCH_QUERY = `select * from fragrances where category = ${category} and (replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText order by ${order} DESC limit ${limit} offset ${offset})`;
 		try {
 			if (offset == 0) {
 				const lengthList = await sequelize.query(SQL_SEARCH_MUCH_QUERY, {
-					replacements: { searchText: searchText, order: order },
+					replacements: { searchText: searchText },
 					type: QueryTypes.SELECT,
 					raw: true,
 				});
 				const countingList = await lengthList[0].counting;
 
 				const searchList = await sequelize.query(SQL_SEARCH_QUERY, {
-					replacements: { searchText: searchText, order: order },
+					replacements: { searchText: searchText },
 					type: QueryTypes.SELECT,
 					raw: true,
 				});
@@ -39,7 +39,7 @@ module.exports = {
 				});
 			} else {
 				const searchList = await sequelize.query(SQL_SEARCH_QUERY, {
-					replacements: { searchText: searchText, order: order },
+					replacements: { searchText: searchText },
 					type: QueryTypes.SELECT,
 					raw: true,
 				});
