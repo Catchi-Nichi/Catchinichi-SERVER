@@ -42,4 +42,5 @@ const uploadS3 = multer({
 });
 router.get("/", SearchController.search); //향수 검색
 router.post("/picture", upload.single("file"), SearchController.pictureSearch); // 향수 사진 검색
+router.post("/picture/base64", SearchController.pictureBase64);
 module.exports = router;

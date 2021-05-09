@@ -1,7 +1,7 @@
 const statusCode = require("../module/statusCode");
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
-
+const fs = require("fs");
 module.exports = {
 	search: async (req, res) => {
 		let { searchText, order, limit, offset, category } = req.query;
@@ -68,6 +68,24 @@ module.exports = {
 				success: true,
 				message: "이미지가 저장되었습니다",
 				url: `/search/${req.file.filename}`,
+			});
+		} catch (err) {
+			console.log(err);
+			res.status(statusCode.INTERNAL_SERVER_ERROR).send({
+				success: false,
+				err: err,
+			});
+		}
+	},
+	pictureBase64: async (req, res) => {
+		const { file } = req.body;
+		const buff = Buffer.from(file, "base64");
+		try {
+			const url = await fs.writeFile(`/search/${Date.now()}.jpg`, buff);
+			return res.status(statusCode.OK).send({
+				success: true,
+				message: "이미지가 저장되었습니다",
+				url,
 			});
 		} catch (err) {
 			console.log(err);
