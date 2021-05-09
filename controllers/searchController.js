@@ -2,6 +2,7 @@ const statusCode = require("../module/statusCode");
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
 const fs = require("fs");
+const path = require("path");
 module.exports = {
 	search: async (req, res) => {
 		let { searchText, order, limit, offset, category } = req.query;
@@ -80,7 +81,7 @@ module.exports = {
 	pictureBase64: (req, res) => {
 		const { file } = req.body;
 		const buff = Buffer.from(file, "base64");
-		const filename = `/search/${Date.now()}.jpg`;
+		const filename = `search/${Date.now()}.jpg`;
 		fs.writeFile(filename, buff, (err) => {
 			if (err) {
 				if (err) console.log(err);
