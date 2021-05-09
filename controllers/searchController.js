@@ -63,10 +63,18 @@ module.exports = {
 	},
 	pictureSearch: async (req, res) => {
 		console.log(req.file);
-		res.status(statusCode.OK).send({
-			success: true,
-			message: "이미지가 저장되었습니다",
-			url: req.file.location,
-		});
+		try {
+			res.status(statusCode.OK).send({
+				success: true,
+				message: "이미지가 저장되었습니다",
+				url: `/search/${req.file.filename}`,
+			});
+		} catch (err) {
+			console.log(err);
+			res.status(statusCode.INTERNAL_SERVER_ERROR).send({
+				success: false,
+				err: err,
+			});
+		}
 	},
 };
