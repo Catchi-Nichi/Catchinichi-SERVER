@@ -98,4 +98,35 @@ module.exports = {
 			});
 		}
 	},
+	updateReview: async (req, res) => {
+		const idx = req.paras.id;
+		const { stars, longevity, mood, comment, brand, en_name } = req.body;
+
+		try {
+			await Review.update(
+				{
+					stars,
+					longevity,
+					mood,
+					comment,
+				},
+				{ where: { id: idx } }
+			);
+
+			const fragrance = await Fragrance.findOne({ where: { brand, en_name } });
+
+			let { avgStars, countingReview } = fragrance.dataValues;
+			avgStars = (avgStars * (countingReview - 1) + parseInt(stars)) / countingReview;
+			await Fragrance.update({ avgStars }, { where: { brand, en_name } });
+
+			return res
+				.status(statusCode.OK)
+				.send({ success: true, message: "리뷰가 성공적으로 수정되었습니다." });
+		} catch (err) {
+			console.log(err);
+			return res
+				.status(statusCode.INTERNAL_SERVER_ERROR)
+				.send({ success: false, message: "서버 내부 오류입니다." });
+		}
+	},
 };
