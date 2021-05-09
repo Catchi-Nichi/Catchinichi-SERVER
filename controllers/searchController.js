@@ -4,17 +4,21 @@ const { sequelize } = require("../models");
 module.exports = {
 	search: async (req, res) => {
 		let { searchText, order, limit, offset, category } = req.query;
+		let categoryText = "";
 		if (limit == undefined) {
 			limit = 999;
 		}
 		if (offset == undefined) {
 			offset = 0;
 		}
+		if (category == 1) {
+			categoryText = "category = 1 and";
+		}
 		searchText = `%${searchText.replace(/ /gi, "%")}%`;
 
-		const SQL_SEARCH_MUCH_QUERY = `select count(*) as counting from fragrances where category = ${category} and (replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText)`;
+		const SQL_SEARCH_MUCH_QUERY = `select count(*) as counting from fragrances where category = ${categoryText} and (replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText)`;
 
-		const SQL_SEARCH_QUERY = `select * from fragrances where category = ${category} and (replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText order by ${order} DESC limit ${limit} offset ${offset})`;
+		const SQL_SEARCH_QUERY = `select * from fragrances where category = ${categoryText} and (replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText order by ${order} DESC limit ${limit} offset ${offset})`;
 		try {
 			if (offset == 0) {
 				const lengthList = await sequelize.query(SQL_SEARCH_MUCH_QUERY, {
@@ -56,4 +60,5 @@ module.exports = {
 				.send({ success: false, message: "검색 중 에러가 발생하였습니다." });
 		}
 	},
+	pictureSearch: async (req, res) => {},
 };
