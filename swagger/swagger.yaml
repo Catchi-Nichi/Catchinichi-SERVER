@@ -245,6 +245,11 @@ schemes:
         description: "몇번째부터 불러올지(안쓰면 0번째부터)"
         required: false
         type: "integer"
+      - name: "category"
+        in: "query"
+        description: "1 = 니치향수 , 0 = 모든 향수"
+        required: true
+        type: "integer"
     responses:
       "200":
         description: "검색 결과가 나옵니다."
