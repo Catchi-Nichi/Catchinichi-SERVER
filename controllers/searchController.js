@@ -16,9 +16,9 @@ module.exports = {
 		}
 		searchText = `%${searchText.replace(/ /gi, "%")}%`;
 
-		const SQL_SEARCH_MUCH_QUERY = `select count(*) as counting from fragrances where ${categoryText} and (replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText)`;
+		const SQL_SEARCH_MUCH_QUERY = `select count(*) as counting from fragrances where ${categoryText} replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText`;
 
-		const SQL_SEARCH_QUERY = `select * from fragrances where ${categoryText} and (replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText order by ${order} DESC limit ${limit} offset ${offset})`;
+		const SQL_SEARCH_QUERY = `select * from fragrances where ${categoryText} replace(kr_brand," ","") like :searchText or replace(brand," ","") like :searchText or replace(kr_name," ","") like :searchText or replace(en_name," ","") like :searchText order by ${order} DESC limit ${limit} offset ${offset}`;
 		try {
 			if (offset == 0) {
 				const lengthList = await sequelize.query(SQL_SEARCH_MUCH_QUERY, {
