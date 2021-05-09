@@ -81,11 +81,12 @@ module.exports = {
 		const { file } = req.body;
 		const buff = Buffer.from(file, "base64");
 		try {
-			const url = await fs.writeFile(`/search/${Date.now()}.jpg`, buff);
+			const filename = `/search/${Date.now()}.jpg`;
+			await fs.writeFile(filename, buff);
 			return res.status(statusCode.OK).send({
 				success: true,
 				message: "이미지가 저장되었습니다",
-				url,
+				filename,
 			});
 		} catch (err) {
 			console.log(err);
