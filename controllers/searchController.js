@@ -1,6 +1,7 @@
 const statusCode = require("../module/statusCode");
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
+
 module.exports = {
 	search: async (req, res) => {
 		let { searchText, order, limit, offset, category } = req.query;
@@ -60,5 +61,12 @@ module.exports = {
 				.send({ success: false, message: "검색 중 에러가 발생하였습니다." });
 		}
 	},
-	pictureSearch: async (req, res) => {},
+	pictureSearch: async (req, res) => {
+		console.log(req.file);
+		res.status(statusCode.OK).send({
+			success: true,
+			message: "이미지가 저장되었습니다",
+			url: req.file.location,
+		});
+	},
 };
