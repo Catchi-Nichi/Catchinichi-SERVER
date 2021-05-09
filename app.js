@@ -55,7 +55,10 @@ app.use((err, req, res, next) => {
 	res.locals.message = err.message;
 	//개발모드일 때는 에러 스택 트레이스 보여주고, 배포중일 땐 안보여줌.
 	res.locals.error = process.env.NODE_ENV !== "production" ? err : {};
-	res.status(err.status || 500).render("error");
+	res.status(err.status || 500).json({
+		message: err.message,
+		error: err,
+	});
 });
 
 app.listen(app.get("port"), () => {
