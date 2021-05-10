@@ -1,8 +1,10 @@
 const statusCode = require("../module/statusCode");
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
-const fs = require("fs");
+const Fragrance = require("../models/fragrance");
+const fs = require("fs").promises;
 const path = require("path");
+const { PythonShell } = require("python-shell");
 module.exports = {
 	search: async (req, res) => {
 		let { searchText, order, limit, offset, category } = req.query;
@@ -65,10 +67,28 @@ module.exports = {
 	pictureSearch: async (req, res) => {
 		console.log(req.file);
 		try {
-			res.status(statusCode.OK).send({
-				success: true,
-				message: "이미지가 저장되었습니다",
-				url: `/search/${req.file.filename}`,
+			let options = {
+				scriptPath: path.join(__dirname, "../label_recog"),
+				args: [path.join(__dirname, "../search/") + req.file.filename],
+			};
+			PythonShell.run("untitled0.py", options, async function (err, data) {
+				if (err) console.log(err);
+				const findingList = JSON.parse(data).detected;
+				const result = await findingList.map(async (obj) => {
+					let db = await Fragrance.findOne({
+						where: {
+							brand: obj.brand,
+							en_name: obj.name,
+						},
+					});
+					return db;
+				});
+				const searchList = await Promise.all(result);
+				res.status(statusCode.OK).send({
+					success: true,
+					message: `향수가 검색되었습니다.`,
+					searchList,
+				});
 			});
 		} catch (err) {
 			console.log(err);
@@ -81,12 +101,38 @@ module.exports = {
 	pictureBase64: (req, res) => {
 		const { file } = req.body;
 		const buff = Buffer.from(file, "base64");
-		const filename = `search/${Date.now()}.jpg`;
-		fs.writeFile(filename, buff, (err) => {
-			if (err) {
-				if (err) console.log(err);
-			}
-		});
+		const filename = path.join(__dirname, "../search") + `/${Date.now()}.jpg`;
+		fs.writeFile(filename, buff)
+			.then((data) => {
+				let options = { scriptPath: path.join(__dirname, "../label_recog"), args: [filename] };
+				PythonShell.run("untitled0.py", options, async function (err, data) {
+					if (err) console.log(err);
+					const findingList = JSON.parse(data).detected;
+					const result = await findingList.map(async (obj) => {
+						let db = await Fragrance.findOne({
+							where: {
+								brand: obj.brand,
+								en_name: obj.name,
+							},
+						});
+						return db;
+					});
+					const searchList = await Promise.all(result);
+					res.status(statusCode.OK).send({
+						success: true,
+						message: `향수가 검색되었습니다.`,
+						searchList,
+					});
+				});
+			})
+			.catch((err) => {
+				console.error(err);
+				res.status(statusCode.INTERNAL_SERVER_ERROR).send({
+					success: false,
+					err: err,
+				});
+			});
+
 		return res.status(statusCode.OK).send({
 			success: true,
 			message: "이미지가 저장되었습니다",
