@@ -68,6 +68,7 @@ module.exports = {
 		console.log(req.file);
 		try {
 			let options = {
+				pythonPath: "/usr/bin/python",
 				scriptPath: path.join(__dirname, "../label_recog"),
 				args: [path.join(__dirname, "../search/") + req.file.filename],
 			};
