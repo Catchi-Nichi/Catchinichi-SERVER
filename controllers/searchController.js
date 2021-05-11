@@ -113,7 +113,6 @@ module.exports = {
 				PythonShell.run("untitled0.py", options, async function (err, data) {
 					if (err) console.log(err);
 					const findingList = JSON.parse(data).detected;
-					console.log(findingList);
 					const result = await findingList.map(async (obj) => {
 						let db = await Fragrance.findOne({
 							where: {
@@ -124,9 +123,9 @@ module.exports = {
 						return db;
 					});
 					const searchList = await Promise.all(result);
-					// fs.unlink(filename, (err) => {
-					// 	if (err) console.log(err);
-					// });
+					fs.unlink(filename, (err) => {
+						if (err) console.log(err);
+					});
 					res.status(statusCode.OK).send({
 						success: true,
 						message: `향수가 검색되었습니다.`,
