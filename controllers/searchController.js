@@ -1,3 +1,4 @@
+"use strict";
 const statusCode = require("../module/statusCode");
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
@@ -104,14 +105,15 @@ module.exports = {
 	},
 	pictureBase64: (req, res) => {
 		const { file } = req.body;
-		const buff = Buffer.from(file, "base64");
-		const filename = path.join(__dirname, "../search") + `/${Date.now()}.jpg`;
-		fs.writeFile(filename, buff)
+		const imageBuffer = Buffer.from(file, "base64");
+		const filename = path.join(__dirname, "../search") + `/${Date.now()}.png`;
+		fs.writeFile(filename, imageBuffer)
 			.then((data) => {
 				let options = { scriptPath: path.join(__dirname, "../label_recog"), args: [filename] };
 				PythonShell.run("untitled0.py", options, async function (err, data) {
 					if (err) console.log(err);
 					const findingList = JSON.parse(data).detected;
+					console.log(findingList);
 					const result = await findingList.map(async (obj) => {
 						let db = await Fragrance.findOne({
 							where: {
@@ -122,9 +124,9 @@ module.exports = {
 						return db;
 					});
 					const searchList = await Promise.all(result);
-					fs.unlink(filename, (err) => {
-						if (err) console.log(err);
-					});
+					// fs.unlink(filename, (err) => {
+					// 	if (err) console.log(err);
+					// });
 					res.status(statusCode.OK).send({
 						success: true,
 						message: `향수가 검색되었습니다.`,
@@ -139,11 +141,5 @@ module.exports = {
 					err: err,
 				});
 			});
-
-		return res.status(statusCode.OK).send({
-			success: true,
-			message: "이미지가 저장되었습니다",
-			filename,
-		});
 	},
 };
