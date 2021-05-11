@@ -5,18 +5,8 @@ const Sequelize = require("sequelize");
 
 module.exports = {
 	addReview: async (req, res) => {
-		const {
-			nick,
-			brand,
-			en_name,
-			kr_name,
-			kr_brand,
-			category,
-			stars,
-			longevity,
-			mood,
-			comment,
-		} = req.body;
+		const { nick, brand, en_name, kr_name, kr_brand, category, stars, longevity, mood, comment } =
+			req.body;
 
 		try {
 			await Review.create({
@@ -99,7 +89,7 @@ module.exports = {
 		}
 	},
 	updateReview: async (req, res) => {
-		const idx = req.paras.id;
+		const idx = req.params.id;
 		const { stars, longevity, mood, comment, brand, en_name } = req.body;
 
 		try {
