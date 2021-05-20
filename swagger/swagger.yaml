@@ -211,6 +211,63 @@ schemes:
 
       "400":
         description: "향수를 가져오는데 문제가 생겼습니다."
+
+/fragrance/like:
+  post:
+    description: 좋아요 클릭
+    tags: [Like]
+    consumes:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        description: "좋아요"
+        schema:
+          type: object
+          properties:
+            nick:
+              type: string
+              example: "capstone"
+            brand:
+              type: string
+              example: "diptyque"
+            fragrance:
+              type: string
+              example: "l'eau de néroli eau de toilette"
+    responses:
+      "200":
+        description: "좋아요."
+      "500":
+        description: "문제가 발생하였습니다."
+
+/fragrance/unlike:
+  post:
+    description: 좋아요 취소
+    tags: [Like]
+    consumes:
+      - application/json
+    parameters:
+      - in: body
+        name: body
+        description: "좋아요 취소"
+        schema:
+          type: object
+          properties:
+            nick:
+              type: string
+              example: "capstone"
+            brand:
+              type: string
+              example: "diptyque"
+            fragrance:
+              type: string
+              example: "l'eau de néroli eau de toilette"
+    responses:
+      "200":
+        description: "좋아요 취소."
+      "500":
+        description: "문제가 발생하였습니다."
+
 /search:
   get:
     description: 브랜드 및 향수 검색
@@ -383,6 +440,7 @@ schemes:
         description: "해당 향수 리뷰를 가져옵니다."
       "500":
         description: "리뷰를 가져오는데 문제가 생겼습니다."
+
 definitions:
   User:
     type: "object"
