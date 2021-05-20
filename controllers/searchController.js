@@ -141,4 +141,32 @@ module.exports = {
 				});
 			});
 	},
+	similar: (req, res) => {
+		const { brand, fragrance } = req.body;
+
+		const options = {
+			scriptPath: path.join(__dirname, "../recommender"),
+			args: [brand, fragrance],
+		};
+
+		PythonShell.run("similar_fragrance.py", options, async function (err, data) {
+			if (err) console.log(err);
+			const findingList = JSON.parse(data).detected;
+			const result = await findingList.map(async (obj) => {
+				let db = await Fragrance.findOne({
+					where: {
+						brand: obj.brand,
+						en_name: obj.name,
+					},
+				});
+				return db;
+			});
+			const searchList = await Promise.all(result);
+			res.status(statusCode.OK).send({
+				success: true,
+				message: `향수가 검색되었습니다.`,
+				searchList,
+			});
+		});
+	},
 };
