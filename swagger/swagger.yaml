@@ -298,11 +298,14 @@ schemes:
             longevity:
               type: integer
               example: 3
+            comment:
+              type: string
+              example: "향수 좋아요!"
         responses:
           "200":
-            description: "검색 결과가 나옵니다."
+            description: "리뷰가 등록되었습니다."
           "400":
-            description: "검색 시 문제가 발생하였습니다."
+            description: "리뷰 문제가 발생하였습니다."
 /review/{nick}:
   get:
     description: "내가 쓴 리뷰 불러오기"
@@ -339,6 +342,42 @@ schemes:
         description: "향수 이름(한글)"
         required: true
         type: "string"
+    responses:
+      "200":
+        description: "해당 향수 리뷰를 가져옵니다."
+      "500":
+        description: "리뷰를 가져오는데 문제가 생겼습니다."
+
+/review/update/{id}:
+  patch:
+    description: "해당 향수 리뷰 수정하기"
+    tags: [Review]
+    consumes:
+      - application/json
+    parameters:
+      - name: "id"
+        in: "path"
+        description: "idx"
+        required: true
+        type: "string"
+      - in: body
+        name: body
+        description: "리뷰 수정"
+        schema:
+          type: object
+          properties:
+            mood:
+              type: string
+              example: "따뜻한"
+            stars:
+              type: integer
+              example: 5
+            longevity:
+              type: integer
+              example: 3
+            comment:
+              type: string
+              example: "향수 좋아요!"
     responses:
       "200":
         description: "해당 향수 리뷰를 가져옵니다."
