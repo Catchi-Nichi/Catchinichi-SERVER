@@ -39,7 +39,6 @@ module.exports = {
 					raw: true,
 				});
 
-				console.log(countingList);
 				return res.status(statusCode.OK).send({
 					success: true,
 					message: `${countingList}개의 향수가 검색되었습니다.`,
@@ -66,7 +65,6 @@ module.exports = {
 		}
 	},
 	pictureSearch: async (req, res) => {
-		console.log(req.file);
 		try {
 			let options = {
 				pythonPath: "python3",
