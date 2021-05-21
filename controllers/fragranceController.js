@@ -1,4 +1,5 @@
 const Fragrance = require("../models/fragrance");
+const Note = require("../models/note");
 const statusCode = require("../module/statusCode");
 const Like = require("../models/like");
 module.exports = {
@@ -32,6 +33,43 @@ module.exports = {
 				success: true,
 				message: `${fragrance}의 정보를 불러왔습니다.`,
 				fragranceData,
+			});
+		} catch (err) {
+			console.log(err);
+			return res.status(statusCode.INTERNAL_SERVER_ERROR).send({
+				success: false,
+				message: "향수를 불러오는 도중 에러가 발생했습니다.",
+			});
+		}
+	},
+	note: async (req, res) => {
+		const { brand, fragrance } = req.params;
+
+		try {
+			//노트 데이터
+			const NoteData = await Note.findAll({
+				attributes: ["time", "note"],
+				where: { brand, name: fragrance },
+			});
+
+			let top = [];
+			let mid = [];
+			let bot = [];
+			NoteData.forEach((note) => {
+				if (note.time === "TOP") {
+					top.push(note.note);
+				} else if (note.time === "MID") {
+					mid.push(note.note);
+				} else {
+					bot.push(note.note);
+				}
+			});
+			return res.status(statusCode.OK).send({
+				success: true,
+				message: `${fragrance}의 노트 정보를 불러왔습니다.`,
+				top,
+				mid,
+				bot,
 			});
 		} catch (err) {
 			console.log(err);
