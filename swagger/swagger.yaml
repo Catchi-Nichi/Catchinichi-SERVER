@@ -320,6 +320,7 @@ schemes:
             - "likes"
             - "countingReview"
             - "avgStars"
+            - "category"
           default: "likes"
       - name: "limit"
         in: "query"
