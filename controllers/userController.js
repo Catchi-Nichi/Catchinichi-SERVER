@@ -19,6 +19,13 @@ module.exports = {
 					.status(statusCode.OK)
 					.send({ success: false, message: "이미 사용중인 이메일입니다." });
 			}
+
+			const exNick = await User.findOne({ where: { nick } });
+			if (exNick) {
+				return await res
+					.status(statusCode.OK)
+					.send({ success: false, message: "이미 사용중인 닉네임입니다." });
+			}
 			// 비밀번호 hash화, 12는 해쉬 난이도
 			const hashedPassword = await bcrypt.hash(password, 12);
 			await User.create({
