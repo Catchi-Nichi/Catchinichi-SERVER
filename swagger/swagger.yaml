@@ -28,6 +28,9 @@ schemes:
             email:
               type: string
               example: apitest@gmail.com
+            nick:
+              type: string
+              example: testtest
             password:
               type: string
               example: qwerasdf
@@ -462,9 +465,121 @@ schemes:
               example: "향수 좋아요!"
     responses:
       "200":
-        description: "해당 향수 리뷰를 가져옵니다."
+        description: "해당 향수 리뷰가 수정되었습니다."
       "500":
-        description: "리뷰를 가져오는데 문제가 생겼습니다."
+        description: "문제가 생겼습니다."
+
+/memo/addMemo:
+  post:
+    description: 시향노트 추가
+    tags: [Memo]
+    produces:
+      - "application/json"
+    parameters:
+      - name: "body"
+        in: "body"
+        description: "시향노트 table에 저장될, 닉네임, 향수 브랜드(한글), 향수 이름(한글), 코멘트가 담긴 body"
+        required: true
+        schema:
+          type: object
+          properties:
+            nick:
+              type: string
+              example: test6
+            brand:
+              type: string
+              example: 딥티크
+            fragrance:
+              type: string
+              example: 도손
+            comment:
+              type: string
+              example: 비누향, 무난한 향
+    responses:
+      "200":
+        description: "시향노트가 성공적으로 등록되었습니다."
+
+/memo/update/{id}:
+  patch:
+    description: "해당 향수 시향노트 수정하기"
+    tags: [Memo]
+    consumes:
+      - application/json
+    parameters:
+      - name: "id"
+        in: "path"
+        description: "시향노트 idx"
+        required: true
+        type: "string"
+      - in: body
+        name: body
+        description: "시향노트 수정 할 코멘트"
+        schema:
+          type: object
+          properties:
+            comment:
+              type: string
+              example: "자꾸 생각나는 향"
+    responses:
+      "200":
+        description: "시향노트가 수정되었습니다."
+      "500":
+        description: "서버 내부에 문제가 생겼습니다."
+
+/memo/delete/{id}:
+  get:
+    description: "작성한 시향노트 삭제하기"
+    tags: [Memo]
+    consumes:
+      - application/json
+    parameters:
+      - name: "id"
+        in: "path"
+        description: "해당 시향노트 idx"
+        required: true
+        type: "string"
+    responses:
+      "200":
+        description: "해당 시향노트를 삭제했습니다."
+      "500":
+        description: "서버 내부에 문제가 발생하였습니다."
+
+/memo/loadAll/{nick}:
+  get:
+    description: "내가 쓴 시향노트 전체 불러오기"
+    tags: [Memo]
+    consumes:
+      - application/json
+    parameters:
+      - name: "nick"
+        in: "path"
+        description: "닉네임"
+        required: true
+        type: "string"
+        example: "test6"
+    responses:
+      "200":
+        description: "시향노트를 불러옵니다."
+      "500":
+        description: "검색 시 문제가 발생하였습니다."
+
+/memo/load/{id}:
+  get:
+    description: "선택한 시향노트(id) 불러오기"
+    tags: [Memo]
+    consumes:
+      - application/json
+    parameters:
+      - name: "id"
+        in: "path"
+        description: "시향노트 각각의 idx"
+        required: true
+        type: "string"
+    responses:
+      "200":
+        description: "시향노트를 불러옵니다."
+      "500":
+        description: "검색 시 문제가 발생하였습니다."
 
 definitions:
   User:
