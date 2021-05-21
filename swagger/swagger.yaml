@@ -215,6 +215,32 @@ schemes:
       "400":
         description: "향수를 가져오는데 문제가 생겼습니다."
 
+/fragrance/note/{brand}/{fragrance}:
+  get:
+    description: 원하는 향수 노트 불러오기
+    tags: [Fragrance]
+    consumes:
+      - application/json
+    parameters:
+      - name: "brand"
+        in: "path"
+        description: "브랜드 이름(영문)"
+        required: true
+        type: "string"
+        example: "acquadiparma"
+      - name: "fragrance"
+        in: "path"
+        description: "향수 이름(영문)"
+        required: true
+        type: "string"
+        example: "colonia"
+    responses:
+      "200":
+        description: "노트 정보를 불러왔습니다."
+
+      "400":
+        description: "향수 노트를 가져오는데 문제가 생겼습니다."
+
 /fragrance/like:
   post:
     description: 좋아요 클릭
