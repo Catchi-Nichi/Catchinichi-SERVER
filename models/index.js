@@ -8,6 +8,7 @@ const Fragrance = require("./fragrance");
 const Review = require("./review");
 const Like = require("./like");
 const Memo = require("./memo");
+const Note = require("./note");
 const db = {};
 const sequelize = new Sequelize(config.database, config.username, config.password, config);
 
@@ -17,12 +18,13 @@ db.Fragrance = Fragrance;
 db.Review = Review;
 db.Like = Like;
 db.Memo = Memo;
-
+db.Note = Note;
 User.init(sequelize);
 Fragrance.init(sequelize);
 Review.init(sequelize);
 Like.init(sequelize);
 Memo.init(sequelize);
+Note.init(sequelize);
 
 User.associate(db);
 Fragrance.associate(db);
