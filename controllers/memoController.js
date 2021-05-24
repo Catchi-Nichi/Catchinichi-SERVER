@@ -23,6 +23,7 @@ module.exports = {
 		}
 	},
 	updateMemo: async (req, res) => {
+		console.log(req.body);
 		const idx = req.params.id;
 		const { comment } = req.body;
 		try {
