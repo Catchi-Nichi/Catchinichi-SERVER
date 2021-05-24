@@ -29,7 +29,7 @@ module.exports = {
 				{
 					comment,
 				},
-				{ where: { id: idx } }
+				{ where: { id: parseInt(idx) } }
 			);
 			return res
 				.status(statusCode.OK)
@@ -47,7 +47,7 @@ module.exports = {
 		try {
 			await Memo.destroy({
 				where: {
-					id: idx,
+					id: parseInt(idx),
 				},
 			});
 			return res.status(statusCode.OK).send({
@@ -88,7 +88,7 @@ module.exports = {
 			const memoList = await Memo.findOne({
 				attributes: ["id", "kr_brand", "kr_name", "comment", "updatedAt"],
 				include: [{ model: Fragrance, attributes: ["img", "likes", "avgStars"] }],
-				where: { id: idx },
+				where: { id: parseInt(idx) },
 			});
 			console.log(memoList);
 			return res.status(statusCode.OK).send({
