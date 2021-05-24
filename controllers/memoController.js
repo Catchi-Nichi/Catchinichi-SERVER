@@ -1,6 +1,7 @@
 const statusCode = require("../module/statusCode");
 const Memo = require("../models/memo");
 const Fragrance = require("../models/fragrance");
+const sequelize = require("sequelize");
 module.exports = {
 	addMemo: async (req, res) => {
 		const { nick, brand, fragrance, comment } = req.body;
@@ -65,7 +66,13 @@ module.exports = {
 		const { nick } = req.params;
 		try {
 			const memoList = await Memo.findAll({
-				attributes: ["id", "kr_brand", "kr_name", "comment", "updatedAt"],
+				attributes: [
+					"id",
+					"kr_brand",
+					"kr_name",
+					"comment",
+					[sequelize.fn("date_format", sequelize.col("updatedAt"), "%Y-%m-%d %h:%m"), "updatedAt"],
+				],
 				include: [{ model: Fragrance, attributes: ["img", "likes", "avgStars"] }],
 				where: { nick },
 			});
@@ -86,7 +93,13 @@ module.exports = {
 		const idx = req.params.id;
 		try {
 			const memoList = await Memo.findOne({
-				attributes: ["id", "kr_brand", "kr_name", "comment", "updatedAt"],
+				attributes: [
+					"id",
+					"kr_brand",
+					"kr_name",
+					"comment",
+					[sequelize.fn("date_format", sequelize.col("updatedAt"), "%Y-%m-%d %h:%m"), "updatedAt"],
+				],
 				include: [{ model: Fragrance, attributes: ["img", "likes", "avgStars"] }],
 				where: { id: parseInt(idx) },
 			});
