@@ -23,7 +23,6 @@ module.exports = {
 		}
 	},
 	updateMemo: async (req, res) => {
-		console.log(req.body);
 		const idx = req.params.id;
 		const { comment } = req.body;
 		try {
@@ -77,7 +76,6 @@ module.exports = {
 				include: [{ model: Fragrance, attributes: ["img", "likes", "avgStars"] }],
 				where: { nick },
 			});
-			console.log(memoList);
 			return res.status(statusCode.OK).send({
 				success: true,
 				message: "해당 사용자의 시향노트를 불러왔습니다.",
