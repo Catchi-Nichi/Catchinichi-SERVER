@@ -52,7 +52,7 @@ module.exports = class Fragrance extends Sequelize.Model {
 	}
 
 	static associate(db) {
-		db.Fragrance.hasMany(db.Review);
+		db.Fragrance.hasMany(db.Review, { foreignKey: "kr_name" });
 		db.Fragrance.hasMany(db.Memo, { foreignKey: "kr_brand" });
 		db.Fragrance.hasMany(db.Memo, { foreignKey: "kr_name" });
 	}
