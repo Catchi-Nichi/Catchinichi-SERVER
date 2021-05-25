@@ -10,5 +10,6 @@ router.use("/fragrance", require("./fragrance"));
 router.use("/search", require("./search"));
 router.use("/review", require("./review"));
 router.use("/memo", require("./memo"));
+router.use("/recommend", require("./recommend"));
 
 module.exports = router;
