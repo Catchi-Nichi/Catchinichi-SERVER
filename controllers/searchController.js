@@ -1,4 +1,3 @@
-"use strict";
 const statusCode = require("../module/statusCode");
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");

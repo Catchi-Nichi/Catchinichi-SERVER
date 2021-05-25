@@ -1,7 +1,8 @@
 const statusCode = require("../module/statusCode");
 const { QueryTypes } = require("sequelize");
 const { sequelize } = require("../models");
-
+const Fragrance = require("../models/fragrance");
+const path = require("path");
 const { PythonShell } = require("python-shell");
 
 module.exports = {
@@ -27,5 +28,32 @@ module.exports = {
 				.send({ success: false, message: "검색 중 에러가 발생하였습니다." });
 		}
 	},
-	personalRecommend: async (req, res) => {},
+	personalRecommend: (req, res) => {
+		const { nick } = req.params;
+
+		const options = {
+			scriptPath: path.join(__dirname, "../recommender"),
+			args: [nick],
+		};
+
+		PythonShell.run("user_based.py", options, async function (err, data) {
+			if (err) console.log(err);
+			const findingList = JSON.parse(data).detected;
+			const result = await findingList.map(async (obj) => {
+				let db = await Fragrance.findOne({
+					where: {
+						brand: obj.brand,
+						en_name: obj.name,
+					},
+				});
+				return db;
+			});
+			const searchList = await Promise.all(result);
+			res.status(statusCode.OK).send({
+				success: true,
+				message: `향수가 검색되었습니다.`,
+				searchList,
+			});
+		});
+	},
 };
