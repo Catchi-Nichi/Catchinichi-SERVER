@@ -608,6 +608,53 @@ schemes:
       "500":
         description: "검색 시 문제가 발생하였습니다."
 
+/recommend/personal/{nick}:
+  get:
+    description: "개개인 향수 5개 추천( 메인페이지 )"
+    tags: [Recommend]
+    consumes:
+      - application/json
+    parameters:
+      - name: "nick"
+        in: "path"
+        description: "사용자 닉네임"
+        required: true
+        type: "string"
+    responses:
+      "200":
+        description: "향수 추천 리스트를 불러왔습니다."
+      "500":
+        description: "불러오는 도중 문제가 발생하였습니다."
+
+/recommend/mood:
+  get:
+    description: "질문지를 통해 이미지로 향수 추천하기"
+    tags: [Recommend]
+    consumes:
+      - application/json
+    parameters:
+      - name: "category1"
+        in: "query"
+        description: "향수 노트 카테고리 1번째"
+        required: true
+        type: "string"
+      - name: "category2"
+        in: "query"
+        description: "향수 노트 카테고리 2번째"
+        required: true
+        type: "string"
+      - name: "mood"
+        in: "query"
+        description: "향수에 대한 이미지 (추가 예정)"
+        required: false
+        type: "string"
+    responses:
+      "200":
+        description: "향수 추천 결과가 나왔습니다."
+
+      "400":
+        description: "향수 추천 시 문제가 발생하였습니다."
+
 definitions:
   User:
     type: "object"
