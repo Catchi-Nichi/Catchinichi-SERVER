@@ -72,7 +72,6 @@ module.exports = {
 
 		try {
 			const review = await Review.findAll({ where: { Usernick: nick } });
-
 			const countingReview = review.length;
 			return res.status(statusCode.OK).send({
 				success: true,
@@ -112,6 +111,26 @@ module.exports = {
 			return res
 				.status(statusCode.OK)
 				.send({ success: true, message: "리뷰가 성공적으로 수정되었습니다." });
+		} catch (err) {
+			console.log(err);
+			return res
+				.status(statusCode.INTERNAL_SERVER_ERROR)
+				.send({ success: false, message: "서버 내부 오류입니다." });
+		}
+	},
+	deleteReview: async (req, res) => {
+		const idx = req.params.id;
+
+		try {
+			await Review.destroy({
+				where: {
+					id: parseInt(idx),
+				},
+			});
+			return res.status(statusCode.OK).send({
+				success: true,
+				message: "해당 리뷰가 삭제되었습니다.",
+			});
 		} catch (err) {
 			console.log(err);
 			return res
