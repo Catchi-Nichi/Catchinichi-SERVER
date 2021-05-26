@@ -11,10 +11,10 @@ module.exports = class Review extends Sequelize.Model {
 					type: Sequelize.STRING(45),
 				},
 				stars: {
-					type: Sequelize.DECIMAL(2, 1),
+					type: Sequelize.FLOAT,
 				},
 				longevity: {
-					type: Sequelize.INTEGER,
+					type: Sequelize.FLOAT,
 				},
 				category: {
 					type: Sequelize.INTEGER,
