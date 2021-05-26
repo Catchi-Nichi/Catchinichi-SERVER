@@ -507,7 +507,7 @@ schemes:
         in: "path"
         description: "해당 리뷰 idx"
         required: true
-        type: "string"
+        type: "integer"
     responses:
       "200":
         description: "해당 리뷰를 삭제했습니다."
@@ -582,7 +582,7 @@ schemes:
         in: "path"
         description: "해당 시향노트 idx"
         required: true
-        type: "string"
+        type: "integer"
     responses:
       "200":
         description: "해당 시향노트를 삭제했습니다."
