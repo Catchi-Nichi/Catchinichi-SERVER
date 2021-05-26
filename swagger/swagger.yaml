@@ -478,6 +478,12 @@ schemes:
         schema:
           type: object
           properties:
+            brand:
+              type: string
+              example: "diptyque"
+            en_name:
+              type: string
+              example: "dosoneaudetoillete"
             mood:
               type: string
               example: "따뜻한"
