@@ -496,6 +496,24 @@ schemes:
       "500":
         description: "문제가 생겼습니다."
 
+/review/delete/{id}:
+  get:
+    description: "작성한 리뷰 삭제하기"
+    tags: [Review]
+    consumes:
+      - application/json
+    parameters:
+      - name: "id"
+        in: "path"
+        description: "해당 리뷰 idx"
+        required: true
+        type: "string"
+    responses:
+      "200":
+        description: "해당 리뷰를 삭제했습니다."
+      "500":
+        description: "서버 내부에 문제가 발생하였습니다."
+
 /memo/addMemo:
   post:
     description: 시향노트 추가
