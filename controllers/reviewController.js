@@ -46,6 +46,7 @@ module.exports = {
 
 		try {
 			const review = await Review.findAll({
+				include: [{ model: Fragrance, attributes: ["img"] }],
 				where: {
 					kr_brand: brand,
 					kr_name: fragrance,
@@ -71,7 +72,10 @@ module.exports = {
 		const { nick } = req.params;
 
 		try {
-			const review = await Review.findAll({ where: { Usernick: nick } });
+			const review = await Review.findAll({
+				include: [{ model: Fragrance, attributes: ["img"] }],
+				where: { Usernick: nick },
+			});
 			const countingReview = review.length;
 			return res.status(statusCode.OK).send({
 				success: true,
