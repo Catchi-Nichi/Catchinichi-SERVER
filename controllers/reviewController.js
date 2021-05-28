@@ -72,7 +72,7 @@ module.exports = {
 		const { nick } = req.params;
 
 		try {
-			const review = await Review.findAll({
+			const reviewList = await Review.findAll({
 				include: [{ model: Fragrance, attributes: ["img"] }],
 				where: { Usernick: nick },
 			});
@@ -80,7 +80,7 @@ module.exports = {
 			return res.status(statusCode.OK).send({
 				success: true,
 				message: "리뷰를 불러왔습니다.",
-				review,
+				reviewList,
 				countingReview,
 			});
 		} catch (err) {
