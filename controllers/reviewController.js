@@ -73,7 +73,7 @@ module.exports = {
 
 		try {
 			const reviewList = await Review.findAll({
-				include: [{ model: Fragrance, attributes: ["img"] }],
+				include: [{ model: Fragrance }],
 				where: { Usernick: nick },
 			});
 			const countingReview = reviewList.length;
