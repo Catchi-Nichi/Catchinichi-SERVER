@@ -76,7 +76,7 @@ module.exports = {
 				include: [{ model: Fragrance, attributes: ["img"] }],
 				where: { Usernick: nick },
 			});
-			const countingReview = review.length;
+			const countingReview = reviewList.length;
 			return res.status(statusCode.OK).send({
 				success: true,
 				message: "리뷰를 불러왔습니다.",
