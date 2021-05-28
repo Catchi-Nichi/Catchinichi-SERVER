@@ -39,21 +39,33 @@ module.exports = {
 		PythonShell.run("user_based.py", options, async function (err, data) {
 			if (err) console.log(err);
 			const findingList = JSON.parse(data).detected;
-			const result = await findingList.map(async (obj) => {
-				let db = await Fragrance.findOne({
-					where: {
-						brand: obj.brand,
-						en_name: obj.name,
-					},
+			if (findingList.length < 1) {
+				const searchList = await Fragrance.findAll({
+					limit: 5,
+					order: [["likes", "DESC"]],
 				});
-				return db;
-			});
-			const searchList = await Promise.all(result);
-			res.status(statusCode.OK).send({
-				success: true,
-				message: `향수가 검색되었습니다.`,
-				searchList,
-			});
+				res.status(statusCode.OK).send({
+					success: true,
+					message: `향수가 검색되었습니다.`,
+					searchList,
+				});
+			} else {
+				const result = await findingList.map(async (obj) => {
+					let db = await Fragrance.findOne({
+						where: {
+							brand: obj.brand,
+							en_name: obj.name,
+						},
+					});
+					return db;
+				});
+				const searchList = await Promise.all(result);
+				res.status(statusCode.OK).send({
+					success: true,
+					message: `향수가 검색되었습니다.`,
+					searchList,
+				});
+			}
 		});
 	},
 };
