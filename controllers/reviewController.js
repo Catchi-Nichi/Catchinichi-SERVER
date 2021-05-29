@@ -103,7 +103,7 @@ module.exports = {
 					mood,
 					comment,
 				},
-				{ where: { id: idx } }
+				{ where: { id: parseInt(idx) } }
 			);
 
 			const fragrance = await Fragrance.findOne({ where: { brand, en_name } });
