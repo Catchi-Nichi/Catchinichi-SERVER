@@ -471,7 +471,7 @@ schemes:
         in: "path"
         description: "idx"
         required: true
-        type: "string"
+        type: "integer"
       - in: body
         name: body
         description: "리뷰 수정"
