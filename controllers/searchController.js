@@ -5,6 +5,9 @@ const Fragrance = require("../models/fragrance");
 const fs = require("fs").promises;
 const path = require("path");
 const { PythonShell } = require("python-shell");
+const bmp = require("bmp-js");
+const Jimp = require("jimp");
+
 module.exports = {
 	search: async (req, res) => {
 		let { searchText, order, limit, offset, category } = req.query;
@@ -102,9 +105,13 @@ module.exports = {
 	},
 	pictureBinary: (req, res) => {
 		const { file } = req.body;
-		const filename = path.join(__dirname, "../search") + `/${Date.now()}.jpeg`;
-		fs.writeFile(filename, file, "binary")
-			.then((data) => {
+		const bmpBuffer = fs.readFileSync(file);
+		Jimp.read(bmpBuffer, function (err, image) {
+			if (err) {
+				console.log(err);
+			} else {
+				const filename = path.join(__dirname, "../search") + `/${Date.now()}.jpeg`;
+				image.write(filename);
 				let options = { scriptPath: path.join(__dirname, "../label_recog"), args: [filename] };
 				PythonShell.run("untitled0.py", options, async function (err, data) {
 					if (err) console.log(err);
@@ -129,14 +136,8 @@ module.exports = {
 						searchList,
 					});
 				});
-			})
-			.catch((err) => {
-				console.error(err);
-				res.status(statusCode.INTERNAL_SERVER_ERROR).send({
-					success: false,
-					err: err,
-				});
-			});
+			}
+		});
 	},
 	pictureBase64: (req, res) => {
 		const { file } = req.body;
