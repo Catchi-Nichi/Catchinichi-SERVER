@@ -6,7 +6,9 @@ import os
 import pymysql
 import json
 import sys
+import cv2
 
+LIMIT_PX = 2000
 db = pymysql.connect(
     user="admin",
     host="db-catchinichi.coagfxdx9ff4.ap-northeast-2.rds.amazonaws.com",
@@ -61,7 +63,7 @@ def detect_text(path):
     response = client.text_detection(image=image)
     texts = response.text_annotations
     try:
-        result = texts[0].description
+        result = texts[0].description        
     except:
         pass
     return result
@@ -129,12 +131,20 @@ def classifier(text, img_dir):
 
 def main():
     img_dir = sys.argv[1]
+    img = cv2.imread(img_dir)
+    height, width, _ = img.shape
+    if LIMIT_PX < height or LIMIT_PX < width:
+        ratio = float(LIMIT_PX) / max(height, width)
+        img = img.reshape((0,0), fx=ratio, fy=ratio)
+        cv2.imwrite(img_dir, img)
     text = detect_text(img_dir).lower().split()
     text = "".join(text)
     return json.dumps({"detected": classifier(text, img_dir)})
 
 
 if __name__ == "__main__":
+   try:
     print(main())
-
+   except:
+       print(json.dumps({"detected":[]}))
 
