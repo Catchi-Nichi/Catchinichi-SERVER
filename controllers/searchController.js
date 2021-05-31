@@ -105,7 +105,10 @@ module.exports = {
 	},
 	pictureBinary: (req, res) => {
 		const { file } = req.body;
+		console.log(file);
 		const bmpBuffer = fs.readFileSync(file);
+		console.log(bmpBuffer);
+
 		Jimp.read(bmpBuffer, function (err, image) {
 			if (err) {
 				console.log(err);
