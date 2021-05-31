@@ -9,6 +9,7 @@ import sys
 import cv2
 
 LIMIT_PX = 2000
+
 db = pymysql.connect(
     user="admin",
     host="db-catchinichi.coagfxdx9ff4.ap-northeast-2.rds.amazonaws.com",
@@ -135,16 +136,17 @@ def main():
     height, width, _ = img.shape
     if LIMIT_PX < height or LIMIT_PX < width:
         ratio = float(LIMIT_PX) / max(height, width)
-        img = img.reshape((0,0), fx=ratio, fy=ratio)
+        img = cv2.resize(img,(0,0), fx=ratio, fy=ratio)
         cv2.imwrite(img_dir, img)
+        # print('resized')
     text = detect_text(img_dir).lower().split()
     text = "".join(text)
     return json.dumps({"detected": classifier(text, img_dir)})
 
 
 if __name__ == "__main__":
-   try:
+#    try:
     print(main())
-   except:
-       print(json.dumps({"detected":[]}))
+#    except:
+#        print(json.dumps({"detected":[]}))
 
