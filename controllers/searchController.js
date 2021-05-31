@@ -120,9 +120,10 @@ module.exports = {
 						return db;
 					});
 					const searchList = await Promise.all(result);
-					fs.unlink(filename, (err) => {
-						if (err) console.log(err);
-					});
+					// 사진 삭제
+					// fs.unlink(filename, (err) => {
+					// 	if (err) console.log(err);
+					// });
 					res.status(statusCode.OK).send({
 						success: true,
 						message: `향수가 검색되었습니다.`,
