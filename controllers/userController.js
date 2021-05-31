@@ -227,11 +227,11 @@ module.exports = {
 		if (exUser) {
 			return await res
 				.status(statusCode.OK)
-				.send({ success: false, message: "닉네임을 불러왔습니다.", nick });
+				.send({ success: true, message: "닉네임을 불러왔습니다.", nick });
 		}
 
 		return res
 			.status(statusCode.OK)
-			.send({ success: true, message: "존재하지 않는 이메일입니다." });
+			.send({ success: false, message: "존재하지 않는 이메일입니다." });
 	},
 };
