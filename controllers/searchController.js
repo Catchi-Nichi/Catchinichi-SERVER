@@ -86,9 +86,9 @@ module.exports = {
 					return db;
 				});
 				const searchList = await Promise.all(result);
-				fs.unlink(path.join(__dirname, "../search/") + req.file.filename, (err) => {
-					if (err) console.log(err);
-				});
+				// fs.unlink(path.join(__dirname, "../search/") + req.file.filename, (err) => {
+				// 	if (err) console.log(err);
+				// });
 				res.status(statusCode.OK).send({
 					success: true,
 					message: `향수가 검색되었습니다.`,
