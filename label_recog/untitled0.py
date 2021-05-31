@@ -113,7 +113,7 @@ def classifier(text, img_dir):
                     source=img_dir,
                     update=False,
                     view_img=False,
-                    weights=os.path.join(abs_path, "label_recog/weights/best.pt"),
+                    weights=os.path.join(abs_path, "weights/best.pt"),
                 )
                 result = detect.detect(opt)
             else:
@@ -135,8 +135,6 @@ def main():
 
 
 if __name__ == "__main__":
-#    try:
     print(main())
- #   except:
-  #      print(json.dumps({"detected":[]}))
+
 
