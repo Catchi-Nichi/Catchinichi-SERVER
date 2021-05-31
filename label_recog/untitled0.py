@@ -135,8 +135,8 @@ def main():
 
 
 if __name__ == "__main__":
-    try:
-        print(main())
-    except:
-        print(json.dumps({"detected":[]}))
+#    try:
+    print(main())
+ #   except:
+  #      print(json.dumps({"detected":[]}))
 
