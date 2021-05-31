@@ -215,4 +215,23 @@ module.exports = {
 				.send({ success: false, message: "서버 내부 오류입니다." });
 		}
 	},
+	NickName: async (req, res) => {
+		const { email } = req.body;
+		if (!email) {
+			return res.status(statusCode.OK).send({ success: false, message: "이메일을 입력해주세요." });
+		}
+
+		const exUser = await User.findOne({ where: { email } });
+		const { nick } = exUser.dataValues;
+		//이미 있는 아이디
+		if (exUser) {
+			return await res
+				.status(statusCode.OK)
+				.send({ success: false, message: "닉네임을 불러왔습니다.", nick });
+		}
+
+		return res
+			.status(statusCode.OK)
+			.send({ success: true, message: "존재하지 않는 이메일입니다." });
+	},
 };
