@@ -5,8 +5,6 @@ const Fragrance = require("../models/fragrance");
 const fs = require("fs").promises;
 const path = require("path");
 const { PythonShell } = require("python-shell");
-const bmp = require("bmp-js");
-const Jimp = require("jimp");
 
 module.exports = {
 	search: async (req, res) => {
@@ -86,9 +84,9 @@ module.exports = {
 					return db;
 				});
 				const searchList = await Promise.all(result);
-				// fs.unlink(path.join(__dirname, "../search/") + req.file.filename, (err) => {
-				// 	if (err) console.log(err);
-				// });
+				fs.unlink(path.join(__dirname, "../search/") + req.file.filename, (err) => {
+					if (err) console.log(err);
+				});
 				res.status(statusCode.OK).send({
 					success: true,
 					message: `향수가 검색되었습니다.`,
@@ -102,45 +100,6 @@ module.exports = {
 				err: err,
 			});
 		}
-	},
-	pictureBinary: (req, res) => {
-		const { file } = req.body;
-		console.log(file);
-		const bmpBuffer = fs.readFileSync(file);
-		console.log(bmpBuffer);
-
-		Jimp.read(bmpBuffer, function (err, image) {
-			if (err) {
-				console.log(err);
-			} else {
-				const filename = path.join(__dirname, "../search") + `/${Date.now()}.jpeg`;
-				image.write(filename);
-				let options = { scriptPath: path.join(__dirname, "../label_recog"), args: [filename] };
-				PythonShell.run("untitled0.py", options, async function (err, data) {
-					if (err) console.log(err);
-					const findingList = JSON.parse(data).detected;
-					const result = await findingList.map(async (obj) => {
-						let db = await Fragrance.findOne({
-							where: {
-								brand: obj.brand,
-								en_name: obj.name,
-							},
-						});
-						return db;
-					});
-					const searchList = await Promise.all(result);
-					// 사진 삭제
-					// fs.unlink(filename, (err) => {
-					// 	if (err) console.log(err);
-					// });
-					res.status(statusCode.OK).send({
-						success: true,
-						message: `향수가 검색되었습니다.`,
-						searchList,
-					});
-				});
-			}
-		});
 	},
 	pictureBase64: (req, res) => {
 		const { file } = req.body;
@@ -162,10 +121,10 @@ module.exports = {
 						return db;
 					});
 					const searchList = await Promise.all(result);
-					// 사진 삭제
-					// fs.unlink(filename, (err) => {
-					// 	if (err) console.log(err);
-					// });
+					사진 삭제
+					fs.unlink(filename, (err) => {
+						if (err) console.log(err);
+					});
 					res.status(statusCode.OK).send({
 						success: true,
 						message: `향수가 검색되었습니다.`,
