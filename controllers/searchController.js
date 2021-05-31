@@ -103,7 +103,7 @@ module.exports = {
 	pictureBase64: (req, res) => {
 		const { file } = req.body;
 		const imageBuffer = Buffer.from(file, "base64");
-		const filename = path.join(__dirname, "../search") + `/${Date.now()}.png`;
+		const filename = path.join(__dirname, "../search") + `/${Date.now()}.jpeg`;
 		fs.writeFile(filename, imageBuffer)
 			.then((data) => {
 				let options = { scriptPath: path.join(__dirname, "../label_recog"), args: [filename] };
