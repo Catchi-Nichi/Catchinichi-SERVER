@@ -47,6 +47,38 @@ schemes:
       "200":
         description: "회원가입에 성공하였습니다"
 
+/user/kakao:
+  post:
+    description: 카카오 회원가입
+    tags: [User]
+    produces:
+      - "application/json"
+    parameters:
+      - name: "body"
+        in: "body"
+        description: "회원 가입에 필요한 email, nick, gender, age, snsId가 담긴 body"
+        required: true
+        schema:
+          type: object
+          properties:
+            email:
+              type: string
+              example: apitest@gmail.com
+            nick:
+              type: string
+              example: testtest
+            gender:
+              type: string
+              example: female
+            age:
+              type: integer
+              example: 25
+            snsId:
+              type: string
+    responses:
+      "200":
+        description: "회원가입에 성공하였습니다"
+
 /user/addNick:
   post:
     description: 닉네임 등록
