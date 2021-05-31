@@ -121,7 +121,6 @@ module.exports = {
 						return db;
 					});
 					const searchList = await Promise.all(result);
-					사진 삭제
 					fs.unlink(filename, (err) => {
 						if (err) console.log(err);
 					});
