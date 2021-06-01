@@ -98,7 +98,7 @@ def classifier(text, img_dir):
                 nichi = "maisonmargiela"
             elif nichi == "acquaparma":
                 nichi = "acquadiparma"
-            print(nichi)
+            # print(nichi)
             # print(result)
             df = search_brand(nichi)
             name_list = df["en_name"].values
