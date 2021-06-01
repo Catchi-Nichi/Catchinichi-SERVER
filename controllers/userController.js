@@ -191,7 +191,7 @@ module.exports = {
 					accessToken: token,
 					refreshToken,
 					email,
-					exNick,
+					nick: exNick,
 				});
 			}
 			const user = await User.create({
