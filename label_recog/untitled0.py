@@ -88,10 +88,12 @@ def classifier(text, img_dir):
     ]
 
     result = []
+    # print(text)
 
     for nichi in nichis:
-        # print(nichi)
         if nichi in text:
+            # print(nichi)
+            # print(result)
             df = search_brand(nichi)
             name_list = df["en_name"].values
             if nichi == "s.marianovella":
@@ -135,12 +137,13 @@ def classifier(text, img_dir):
 def main():
     img_dir = sys.argv[1]
     img = cv2.imread(img_dir)
-    height, width, _ = img.shape
-    if LIMIT_PX < height or LIMIT_PX < width:
-        ratio = float(LIMIT_PX) / max(height, width)
-        img = cv2.resize(img, (0, 0), fx=ratio, fy=ratio)
-        cv2.imwrite(img_dir, img)
+    # height, width, _ = img.shape
+    # if LIMIT_PX < height or LIMIT_PX < width:
+    #     ratio = float(LIMIT_PX) / max(height, width)
+    #     img = cv2.resize(img, (0, 0), fx=ratio, fy=ratio)
+    #     cv2.imwrite(img_dir, img)
     text = detect_text(img_dir).lower().split()
+    # print(text)
     text = "".join(text)
 
     return json.dumps({"detected": classifier(text, img_dir)})
