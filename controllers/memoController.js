@@ -71,7 +71,10 @@ module.exports = {
 					"kr_brand",
 					"kr_name",
 					"comment",
-					[sequelize.fn("date_format", sequelize.col("updatedAt"), "%Y-%m-%d %h:%m"), "updatedAt"],
+					[
+						sequelize.fn("date_format", sequelize.col("updatedAt"), "%Y-%m-%d %hh:%mm"),
+						"updatedAt",
+					],
 				],
 				include: [{ model: Fragrance, attributes: ["img", "likes", "avgStars"] }],
 				where: { nick },
@@ -97,7 +100,10 @@ module.exports = {
 					"kr_brand",
 					"kr_name",
 					"comment",
-					[sequelize.fn("date_format", sequelize.col("updatedAt"), "%Y-%m-%d %h:%m"), "updatedAt"],
+					[
+						sequelize.fn("date_format", sequelize.col("updatedAt"), "%Y-%m-%d %hh:%mm"),
+						"updatedAt",
+					],
 				],
 				include: [{ model: Fragrance, attributes: ["img", "likes", "avgStars"] }],
 				where: { id: parseInt(idx) },
