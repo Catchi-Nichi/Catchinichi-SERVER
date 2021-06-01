@@ -64,7 +64,7 @@ def detect_text(path):
     response = client.text_detection(image=image)
     texts = response.text_annotations
     try:
-        result = texts[0].description        
+        result = texts[0].description
     except:
         pass
     return result
@@ -79,15 +79,18 @@ def detect_text(path):
 def classifier(text, img_dir):
     nichis = [
         "byredo",
-        "masionmargiela",
+        "maisonmargiela",
         "diptyque",
         "jomalone",
         "creed",
         "acquadiparma",
         "s.marianovella",
     ]
+
     result = []
+
     for nichi in nichis:
+        # print(nichi)
         if nichi in text:
             df = search_brand(nichi)
             name_list = df["en_name"].values
@@ -126,7 +129,6 @@ def classifier(text, img_dir):
             if result == []:
                 for name in name_list:
                     result.append({"brand": nichi, "name": name})
-
     return result
 
 
@@ -136,17 +138,16 @@ def main():
     height, width, _ = img.shape
     if LIMIT_PX < height or LIMIT_PX < width:
         ratio = float(LIMIT_PX) / max(height, width)
-        img = cv2.resize(img,(0,0), fx=ratio, fy=ratio)
+        img = cv2.resize(img, (0, 0), fx=ratio, fy=ratio)
         cv2.imwrite(img_dir, img)
-        # print('resized')
     text = detect_text(img_dir).lower().split()
     text = "".join(text)
+
     return json.dumps({"detected": classifier(text, img_dir)})
 
 
 if __name__ == "__main__":
-#    try:
-    print(main())
-#    except:
-#        print(json.dumps({"detected":[]}))
-
+    try:
+        print(main())
+    except:
+        print(json.dumps({"detected": []}))
