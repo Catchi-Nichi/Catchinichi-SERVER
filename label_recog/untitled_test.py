@@ -4,7 +4,7 @@ import os
 
 
 def test_u0():
-    base_dir = "../test_failed"
+    base_dir = "../image_test"
     img = os.listdir(base_dir)
     for i in img:
         img_dir = os.path.join(base_dir, i)
