@@ -74,7 +74,7 @@ module.exports = {
 		try {
 			const reviewList = await Review.findAll({
 				include: [{ model: Fragrance }],
-				where: { Usernick: nick },
+				where: { Usernick: nick, category: 1 },
 			});
 			const countingReview = reviewList.length;
 			return res.status(statusCode.OK).send({
