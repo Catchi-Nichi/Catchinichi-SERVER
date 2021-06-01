@@ -98,7 +98,7 @@ def classifier(text, img_dir):
                 nichi = "maisonmargiela"
             elif nichi == "acquaparma":
                 nichi = "acquadiparma"
-            # print(nichi)
+            print(nichi)
             # print(result)
             df = search_brand(nichi)
             name_list = df["en_name"].values
@@ -129,7 +129,7 @@ def classifier(text, img_dir):
                     view_img=False,
                     weights=os.path.join(abs_path, "weights/best.pt"),
                 )
-                result = detect.detect(opt)
+                result.append(detect.detect(opt))
             else:
                 # print(name_list)
                 for name in name_list:
