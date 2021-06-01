@@ -129,7 +129,7 @@ def classifier(text, img_dir):
                     view_img=False,
                     weights=os.path.join(abs_path, "weights/best.pt"),
                 )
-                result.append(detect.detect(opt))
+                result += detect.detect(opt)
             else:
                 # print(name_list)
                 for name in name_list:
