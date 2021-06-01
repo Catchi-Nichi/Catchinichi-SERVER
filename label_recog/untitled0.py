@@ -16,14 +16,14 @@ db = pymysql.connect(
     port=3306,
     password="Password!23",
     database="catchiNichi",
-    charset="utf8",
+    charset="latin1",
 )
 cursor = db.cursor(pymysql.cursors.DictCursor)
 
 sql = "SELECT * FROM fragrances"
 cursor.execute(sql)
 frag_dict = cursor.fetchall()
-frag_data = pd.DataFrame(frag_dict)
+frag_data = pd.DataFrame.from_dict(frag_dict)
 
 abs_path = os.path.dirname(os.path.realpath(__file__))
 
@@ -80,10 +80,12 @@ def classifier(text, img_dir):
     nichis = [
         "byredo",
         "maisonmargiela",
+        "maisonmartinmargiela",
         "diptyque",
         "jomalone",
         "creed",
         "acquadiparma",
+        "acquaparma",
         "s.marianovella",
     ]
 
@@ -92,6 +94,10 @@ def classifier(text, img_dir):
 
     for nichi in nichis:
         if nichi in text:
+            if nichi == "maisonmartinmargiela":
+                nichi = "maisonmargiela"
+            elif nichi == "acquaparma":
+                nichi = "acquadiparma"
             # print(nichi)
             # print(result)
             df = search_brand(nichi)
@@ -125,6 +131,7 @@ def classifier(text, img_dir):
                 )
                 result = detect.detect(opt)
             else:
+                # print(name_list)
                 for name in name_list:
                     if name in text:
                         result.append({"brand": nichi, "name": name})
@@ -134,8 +141,9 @@ def classifier(text, img_dir):
     return result
 
 
-def main():
-    img_dir = sys.argv[1]
+def main(img_dir=None):
+    if img_dir == None:
+        img_dir = sys.argv[1]
     img = cv2.imread(img_dir)
     # height, width, _ = img.shape
     # if LIMIT_PX < height or LIMIT_PX < width:
