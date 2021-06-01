@@ -181,7 +181,7 @@ module.exports = {
 
 		try {
 			const exUser = await User.findOne({ where: { email } });
-			const { nick } = exUser.dataValues;
+			const exNick = exUser.dataValues.nick;
 			//이미 있는 아이디
 			if (exUser) {
 				const { token, refreshToken } = await jwt.sign(exUser);
@@ -191,7 +191,7 @@ module.exports = {
 					accessToken: token,
 					refreshToken,
 					email,
-					nick,
+					exNick,
 				});
 			}
 			const user = await User.create({
