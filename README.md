@@ -11,6 +11,64 @@
 |     AI     | 송유지     |
 
 
+### 기술스택
+
+`Node.js, Mysql, AWS EC2, AWS RDS, AWS S3`
+
+### 디렉토리 구조
+
+```bash
+#Catchi-Nichi-SERVER
+
+├── config
+│   └── config.js
+├── controllers
+│   ├── fragranceController.js
+│   ├── memoController.js
+│   ├── recommendController.js
+│   ├── reviewController.js
+│   ├── searchController.js
+│   └── userController.js
+├── models
+│   ├── fragrance.js
+│   ├── index.js
+│   ├── like.js
+│   ├── memo.js
+│   ├── note.js
+│   ├── review.js
+│   └── user.js
+├── module
+│   ├── jwt.js
+│   ├── middlewares.js
+│   └── statusCode.js
+├── recommender
+│   ├── DataFrames
+│   │   ├── df_preds.csv
+│   │   └── user_row_df.csv
+│   ├── mysql_reviews.py
+│   ├── requirements.txt
+│   ├── similar_fragrance.py
+│   ├── updateTable.py
+│   └── user_based.py
+├── routes
+│   ├── fragrance.js
+│   ├── index.js
+│   ├── memo.js
+│   ├── recommend.js
+│   ├── review.js
+│   ├── search.js
+│   ├── token.js
+│   └── user.js
+├── search
+├── swagger
+│   ├── swagger.js
+│   └── swagger.yaml
+├── README.md
+├── app.js
+├── package-lock.json
+└── package.json
+```
+
 ### 휴대폰 인증을 위해  Twilio 가입
 
 Twillio([twilio.com](http://twilio.com/)) 가입 후, **ACCOUNT SID, AUTH TOKEN, PHONE NUMBER**을 발급받습니다.
