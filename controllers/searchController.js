@@ -68,10 +68,10 @@ module.exports = {
 		try {
 			let options = {
 				pythonPath: "python3.8",
-				scriptPath: path.join(__dirname, "../label_recog"),
+				scriptPath: path.join(__dirname, "../labe_recognition"),
 				args: [path.join(__dirname, "../search/") + req.file.filename],
 			};
-			PythonShell.run("untitled0.py", options, async function (err, data) {
+			PythonShell.run("label_cls.py", options, async function (err, data) {
 				if (err) console.log(err);
 				const findingList = JSON.parse(data).detected;
 				const result = await findingList.map(async (obj) => {
@@ -107,8 +107,8 @@ module.exports = {
 		const filename = path.join(__dirname, "../search") + `/${Date.now()}.jpeg`;
 		fs.writeFile(filename, imageBuffer)
 			.then((data) => {
-				let options = { scriptPath: path.join(__dirname, "../label_recog"), args: [filename] };
-				PythonShell.run("untitled0.py", options, async function (err, data) {
+				let options = { scriptPath: path.join(__dirname, "../labe_recognition"), args: [filename] };
+				PythonShell.run("label_cls.py", options, async function (err, data) {
 					if (err) console.log(err);
 					const findingList = JSON.parse(data).detected;
 					const result = await findingList.map(async (obj) => {
