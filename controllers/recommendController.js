@@ -41,6 +41,7 @@ module.exports = {
 		const { nick } = req.params;
 
 		const options = {
+			pythonPath: "python3.8",
 			scriptPath: path.join(__dirname, "../recommender"),
 			args: [nick],
 		};

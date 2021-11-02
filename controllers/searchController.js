@@ -68,7 +68,7 @@ module.exports = {
 		try {
 			let options = {
 				pythonPath: "python3.8",
-				scriptPath: path.join(__dirname, "../labe_recognition"),
+				scriptPath: path.join(__dirname, "../label_recognition"),
 				args: [path.join(__dirname, "../search/") + req.file.filename],
 			};
 			PythonShell.run("label_cls.py", options, async function (err, data) {
@@ -107,7 +107,7 @@ module.exports = {
 		const filename = path.join(__dirname, "../search") + `/${Date.now()}.jpeg`;
 		fs.writeFile(filename, imageBuffer)
 			.then((data) => {
-				let options = { scriptPath: path.join(__dirname, "../labe_recognition"), args: [filename] };
+				let options = { scriptPath: path.join(__dirname, "../label_recognition"), args: [filename] };
 				PythonShell.run("label_cls.py", options, async function (err, data) {
 					if (err) console.log(err);
 					const findingList = JSON.parse(data).detected;
@@ -143,6 +143,7 @@ module.exports = {
 		const { brand, fragrance } = req.body;
 
 		const options = {
+			pythonPath: "python3.8",
 			scriptPath: path.join(__dirname, "../recommender"),
 			args: [brand, fragrance],
 		};
