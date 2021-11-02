@@ -67,7 +67,7 @@ module.exports = {
 	pictureSearch: async (req, res) => {
 		try {
 			let options = {
-				pythonPath: "python3",
+				pythonPath: "python3.8",
 				scriptPath: path.join(__dirname, "../label_recog"),
 				args: [path.join(__dirname, "../search/") + req.file.filename],
 			};
