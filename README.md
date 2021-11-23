@@ -10,6 +10,8 @@
 |  **서버**  | **신지호** |
 |     AI     | 송유지     |
 
+<img width="661" alt="스크린샷 2021-11-21 오후 6 25 54" src="https://user-images.githubusercontent.com/60956392/142955338-6f3dbcd1-be6a-45e8-8abe-3b890553f64b.png">
+<img width="536" alt="스크린샷 2021-11-21 오후 6 25 49" src="https://user-images.githubusercontent.com/60956392/142955350-b6bbee66-bc5f-493e-b1f5-c651f50afa7e.png">
 
 ### 기술스택
 
