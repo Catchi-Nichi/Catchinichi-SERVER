@@ -130,3 +130,10 @@ AI 쪽에서 label_lecog 폴더를 다운로드합니다. ([https://github.com/C
 ```bash
 npm start
 ```
+
+
+### 중앙대학교 캡스톤 경진대회 우수상
+
+[Link](http://www.swaicau.com/bbs/board.php?bo_table=program1)
+
+<img width="372" alt="스크린샷 2021-11-28 오후 9 02 54" src="https://user-images.githubusercontent.com/60956392/143766861-a3f0ce5f-0937-4522-bef0-476e1f397d73.png">
