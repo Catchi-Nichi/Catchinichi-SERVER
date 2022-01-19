@@ -2,6 +2,9 @@
 
 ## CAU capstone design (2)
 
+### 데모영상
+[Link](https://www.youtube.com/watch?v=hrS-3LWO8Pc)
+
 ### 역할분담
 
 |    담당    | 이름       |
